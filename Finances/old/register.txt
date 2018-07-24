@@ -1,0 +1,388 @@
+<?php
+
+include_once "dbconn/variables.php";
+
+//Step1
+ $db = mysqli_connect($server,$user,$pass,$table)
+   or die('Error connecting to MySQL server.');
+?> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Checking Register</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link href='../Calendar/css/fullcalendar.css' rel='stylesheet'/>
+  <link href='../Calendar/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
+  <link href='https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css' rel='stylesheet' />
+  <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />
+  <link type="text/css" rel="stylesheet" href="../Calendar/css/jquery.qtip.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src='../Calendar/js/moment.js'></script>
+  <script src='../Calendar/js/jquery.js'></script>
+  <script src='../Calendar/js/fullcalendar.js'></script>
+  <script src="../Calendar/js/jquery.qtip.js"></script>
+  <script src="../Calendar/js/popover.js"></script>
+  <script src="../Calendar/js/mystuff.js"></script>
+  
+  <script>
+
+$(document).ready(function() {
+
+<!-- $(function() { -->
+
+  // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+      themeSystem: 'jquery-ui',
+      //themeSystem: 'bootstrap4',
+      //bootstrapFontAwesome: true,
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,listWeek'
+      },
+      //defaultDate: '2018-03-12',
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+	 
+      //events: 'dbconn/myfeed.php',
+      eventSources: [
+	  {
+		  url: 'dbconn/myfeed.php',
+		  textColor: 'white'
+	  }
+	  ],
+      eventRender: function(event, element) {
+        element.qtip({
+           content: {
+              text: event.test,
+              title: event.title
+          },
+          position: {
+             target: 'mouse', // Track the mouse as the positioning target
+             adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+          },
+          style: {
+          classes: 'qtip-green qtip-shadow'
+          }
+        });
+      }
+});
+});
+
+
+</script>
+<style>
+  #calendar {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+</style>
+  
+</head>
+<body>
+
+<!--<div class="container-fluid">
+  <h3>Rivera Checking</h3>
+</div>-->
+
+<!-- NAV BAR ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark left"><nav class="nav flex-column bg-dark navbar-dark">-->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+  <a class="navbar-brand" href="#">
+  	<img src="../images/Damien.png" alt="Damien" style="width:40px;">
+</a>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <button class="nav-link btn btn-link" data-toggle="collapse" data-target="#register" aria-expanded="true" aria-controls="register">Register</a>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link btn btn-link" data-toggle="collapse" data-target="#calendar" aria-expanded="false" aria-controls="calendar">Calendar</a>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link btn btn-link" data-toggle="collapse" data-target="#reports" aria-expanded="false" aria-controls="reports">Reports</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Accordion Begin   ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div id="accordion">
+
+<!-- Register  ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="collapse show" id="register" aria-labelledby="headingOne" data-parent="#accordion">
+<?php
+            $rowperpage = 5;
+            $row = 0;
+
+            // Previous Button
+            if(isset($_POST['but_prev'])){
+                $row = $_POST['row'];
+                $row -= $rowperpage;
+                if( $row < 0 ){
+                    $row = 0;
+                }
+            }
+
+            // Next Button
+            if(isset($_POST['but_next'])){
+                $row = $_POST['row'];
+                $allcount = $_POST['allcount'];
+
+                $val = $row + $rowperpage - 1;
+                if( $val <= $allcount ){
+                    $row = $val;
+                }
+            }
+        ?>
+<?php
+ //Step2
+             // count total number of rows
+            $query = "SELECT COUNT(*) AS cntrows FROM Register";
+            $result = mysqli_query($db,$query);
+            $fetchresult = mysqli_fetch_array($result);
+            $allcount = $fetchresult['cntrows'];
+ 
+ 
+ // $query = "SELECT * FROM Register LIMIT " . $row . ", " . $rowperpage . ";";
+ $query = "SELECT * FROM Register";
+
+ mysqli_query($db, $query) or die('Error querying database.');
+ 
+ //Step3
+ $result = mysqli_query($db, $query);
+ $row = mysqli_fetch_array($result);
+ 
+ //Step 4
+ //mysqli_close($db);
+ //$sno = $row + 1;
+?>
+
+<table class="table table-striped table-hover">
+<thead>
+<tr>
+<th>ID#</th>
+<th>Transaction Date</th>
+<th>Posted Date</th>
+<th>Check No</th>
+<th>Description</th>
+<th>Debit</th>
+<th>Deposit</th>
+</tr>
+</thead>
+<tbody>
+<?php
+
+	 while ($row = mysqli_fetch_array($result)) {
+		//echo '<tr class="clickable-row" data-href="#">';
+		echo '<th scope="row">' . $row["Id"] . '</th>';
+		echo '<td>' . $row["TDate"] . '</td>';
+		echo '<td>' . $row["PDate"] . '</td>';
+		echo '<td>' . $row["CkNo"] . '</td>';
+		echo '<td>' . $row["Description"] . '</td>';
+		echo '<td class="text-danger">' . $row["Debit"] . '</td>';
+		echo '<td>' . $row["Credit"] . '</td>';
+		echo '<td><button type="button" class="btn btn-primary btn-sm" id="btn' . $row["Id"] . '" data-toggle="modal" data-target="#modalEdit' . $row["Id"] . '">Edit</button>';
+		echo '</tr>';
+		
+		//<!--modal Edit-->
+          echo '<div class="modal fade" id="modalEdit' . $row["Id"] . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+            echo '<div class="modal-dialog" role="document">';
+              echo '<div class="modal-content">';
+                echo '<div class="modal-header">';
+                  echo '<h5 class="modal-title" id="exampleModalLabel">Edit Transaction</h5>';
+                  echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                    echo '<span aria-hidden="true">&times;</span>';
+                  echo '</button>';
+                echo '</div>';
+                echo '<div class="modal-body">';
+                    echo '<form action="updatephp.php" method="post" >';
+                    echo '<div class="form-group row">';
+                    echo '<label for="recordID' . $row["Id"] . '" class="col-sm-4 col-form-label">RecordID:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID' . $row["Id"] . '" readonly value="' . $row["Id"] . '">';
+                       echo '</div>';
+                    echo '<label for="Account' . $row["Id"] . '" class="col-sm-4 col-form-label">Account:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo $row["Account"];
+                    //echo '<input type="text" class="form-control-plaintext" name="Account" id="Account' . $row["Id"] . '" readonly value="' . $row["Account"] . '">';
+                       echo '</div>';
+                    echo '</div>';
+                    echo '<div class="form-group row">';
+                    echo '<label for="tDate' . $row["Id"] . '" class="col-sm-4 col-form-label">Transaction Date:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="TDate" id="tDate' . $row["Id"] . '" value="' . $row["TDate"] . '">';
+                       echo '</div>';
+                    echo '<label for="pDate' . $row["Id"] . '" class="col-sm-4 col-form-label">Posted Date:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="PDate" id="pDate' . $row["Id"] . '" value="' . $row["PDate"] . '">';
+                       echo '</div>';
+                    echo '<label for="CkNo' . $row["Id"] . '" class="col-sm-4 col-form-label">Check #:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="CkNo" id="CkNo' . $row["Id"] . '" value="' . $row["CkNo"] . '">';
+                       echo '</div>';
+                    echo '<label for="Desc' . $row["Id"] . '" class="col-sm-4 col-form-label">Description:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="Description" id="Desc' . $row["Id"] . '" value="' . $row["Description"] . '">';
+                       echo '</div>';
+                    echo '<label for="Debit' . $row["Id"] . '" class="col-sm-4 col-form-label">Debit:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="text-danger form-control" name="Debit" id="Debit' . $row["Id"] . '" value="' . $row["Debit"] . '">';
+                       echo '</div>';
+                    echo '<label for="Credit' . $row["Id"] . '" class="col-sm-4 col-form-label">Deposit:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="Credit" id="Credit' . $row["Id"] . '" value="' . $row["Credit"] . '">';
+                       echo '</div>';
+                    echo '</div>';
+                echo '<div class="modal-footer">';
+                  echo '<button type="submit" class="btn btn-danger mr-auto" name="delete" value="delete">Delete</button>';
+                  echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>';
+                  echo '<button type="submit" class="btn btn-primary" name="update" value="update">Save changes</button>';
+                echo '</div>';
+                    echo '</form>';
+              echo '</div>';
+            echo '</div>';
+          echo '</div>';
+          echo '</div>';
+          //<!--end modal Edit-->
+
+		
+ 	 }
+//$sno ++;
+//data-toggle="modal" data-target="#exampleModal"
+?>
+
+<th scope="row"><td><button type="button" class="btn btn-success btn-sm" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button></td><td></td><td></td><td></td><td></td><td></td><td><button type="button" class="btn btn-success btn-sm" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button></td></th>
+</tbody></table>
+<?php
+          //<!--modal Upload-->
+          echo '<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+            echo '<div class="modal-dialog" role="document">';
+              echo '<div class="modal-content">';
+                echo '<div class="modal-header">';
+                  echo '<h5 class="modal-title" id="exampleModalLabel">Upload Transactions</h5>';
+                  echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                    echo '<span aria-hidden="true">&times;</span>';
+                  echo '</button>';
+                echo '</div>';
+                echo '<div class="modal-body">';
+                    echo '<form action="updatephp.php" method="post" >';
+                    echo 'File name to import:</br>';
+                    echo '<input type="file" size="50" class="btn btn-primary" name="filename"></br>';
+                echo '</div>';
+                echo '<div class="modal-footer">';
+                  echo '<button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancel</button>';
+                  echo '<button type="submit" class="btn btn-primary" name="upload" value="upload">Upload Transactions</button>';
+                echo '</div>';
+                    echo '</form>';
+              echo '</div>';
+            echo '</div>';
+          echo '</div>';
+          //<!--end modal Upload-->
+?>
+<?php
+          //<!--modal Add-->
+          echo '<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+            echo '<div class="modal-dialog" role="document">';
+              echo '<div class="modal-content">';
+                echo '<div class="modal-header">';
+                  echo '<h5 class="modal-title" id="exampleModalLabel">Add Transaction</h5>';
+                  echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                    echo '<span aria-hidden="true">&times;</span>';
+                  echo '</button>';
+                echo '</div>';
+                echo '<div class="modal-body">';
+                    echo '<form action="updatephp.php" method="post" >';
+                    echo '<div class="form-group row">';
+                    //echo '<label for="recordID" class="col-sm-4 col-form-label">RecordID:</label>';
+                       //echo '<div class="col-sm-8">';
+                    //echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID' . $row["Id"] . '" readonly value="' . $row["Id"] . '">';
+                       //echo '</div>';
+                    echo '<label for="Account" class="col-sm-4 col-form-label">Account:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo 'Damien\'s Checking * 7128';
+                    //echo '<input type="text" class="form-control-plaintext" name="Account" id="Account' . $row["Id"] . '" readonly value="' . $row["Account"] . '">';
+                       echo '</div>';
+                    echo '</div>';
+                    echo '<div class="form-group row">';
+                    echo '<label for="tDate" class="col-sm-4 col-form-label">Transaction Date:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="TDate" id="tDate" value="">';
+                       echo '</div>';
+                    echo '<label for="pDate" class="col-sm-4 col-form-label">Posted Date:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="PDate" id="pDate" value="">';
+                       echo '</div>';
+                    echo '<label for="CkNo" class="col-sm-4 col-form-label">Check #:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="CkNo" id="CkNo" value="">';
+                       echo '</div>';
+                    echo '<label for="Desc" class="col-sm-4 col-form-label">Description:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="Description" id="Desc" value="">';
+                       echo '</div>';
+                    echo '<label for="Debit" class="col-sm-4 col-form-label">Debit:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="text-danger form-control" name="Debit" id="Debit" value="">';
+                       echo '</div>';
+                    echo '<label for="Credit" class="col-sm-4 col-form-label">Deposit:</label>';
+                       echo '<div class="col-sm-8">';
+                    echo '<input type="text" class="form-control" name="Credit" id="Credit" value="">';
+                       echo '</div>';
+                    echo '</div>';
+                echo '<div class="modal-footer">';
+                  //echo '<button type="submit" class="btn btn-danger mr-auto" name="delete" value="delete">Delete</button>';
+                  echo '<button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancel</button>';
+                  echo '<button type="submit" class="btn btn-primary" name="add" value="add">Add Transaction</button>';
+                echo '</div>';
+                    echo '</form>';
+              echo '</div>';
+            echo '</div>';
+          echo '</div>';
+          echo '</div>';
+          //<!--end modal Add-->
+?>
+
+
+        <!-- <form method="post" action="">
+            <div id="div_pagination">
+                <input type="hidden" name="row" value="<?php //echo $row; ?>">
+                <input type="hidden" name="allcount" value="<?php //echo $allcount; ?>">
+                <input type="submit" class="button" name="but_prev" value="Previous">
+				<?php //echo $row; ?> , <?php //echo $allcount; ?>
+                <input type="submit" class="button" name="but_next" value="Next">
+            </div>
+        </form>
+-->
+<!-- End Register  ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+<!--</div>
+</div>
+<!-- Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="collapse" id="calendar" aria-labelledby="headingTwo" data-parent="#accordion">
+<a href="https://fullcalendar.io/docs" target="_blank" >documentation</a>
+<!-- End Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+<!-- Reports ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="collapse" id="reports" aria-labelledby="headingThree" data-parent="#accordion">
+Reports will be here
+<!-- End Reports   ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+<!--</div>
+</div>
+<!-- End Accordion   ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+Category	Parent Category	Usage	Type	Description	Group	Tax Line Item	Hide
+[ABN AMRO]		1	Transfer				
+Ads		3	Expense	Advertising	Income	Schedule C:Advertising T	
+Auto		7	Expense	Automobile Expenses	Personal Expenses		
+Fuel	Auto	1235	Expense	Auto Fuel	Personal Expenses		
+Insurance	Auto	140	Expense	Auto Insurance	Personal Expenses		
+Loan	Auto	25	Expense		Personal Expenses		
+Registration	Auto	78	Expense	Auto Registration	Personal Expenses	Schedule A:Personal property taxes T	
+Service	Auto	189	Expense	Auto Service	Personal Expenses		
+Baby		119	Expense		Personal Expenses		
+Babysitting		1	Expense		Personal Expenses		
+Bad Debt		47	Expense	Bad Debt Expense	Income	Schedule C:Bad debts from sales/services T	
+Bank Charge		93	Expense	Bank Charge	Personal Expenses		
+Blow		1	Expense		Personal Expenses		
+Bonus		18	Income	Bonus Income	Income	W-2:Salary or wages, self T	
+Car		29	Expense	Car & Truck	Business Expenses	Schedule C:Car and truck expenses T	
+[Carolann Rivera]		1	Transfer				
+Cash		604	Expense	Misc Cash	Personal Expenses		
+Charity		940	Expense	Charitable Donations - Cash	Personal Expenses	Schedule A:Cash charity contributions T	
+Child Care		8	Expense		Personal Expenses		
+Church Service		1	Expense		Personal Expenses	 T	
+[CitiBank]		1	Transfer				
+Clothing		154	Expense	Clothing	Personal Expenses		
+Shoes	Clothing	53	Expense		Personal Expenses		
+Commission		0	Expense	Commissions	Business Expenses	Schedule C:Commissions and fees T	
+Computer		74	Expense		Personal Expenses		
+Consulting		0	Income	Consulting Income	Business Income	Schedule C:Gross receipts or sales T	
+Credit Card		259	Expense	Payment	Personal Expenses		
+Credit Transfer		1	Income		Personal Income		
+Dining		2854	Expense	Dining Out	Personal Expenses		
+Pit Stop	Dining	90	Expense		Personal Expenses		
+Discounts		0	Expense	Discount Expense	Income	Schedule C:Returns and allowances T	
+Div Income		11	Income	Dividend Income	Income	Schedule B:Dividend income T	
+Dues and Licensures		14	Expense		Personal Expenses		
+Dues and Subscriptions		160	Expense	Dues and Subscription Expense	Personal Expenses	Schedule C:Other business expenses T	
+Education		323	Expense	Education	Personal Expenses		
+Homeschool Supplies	Education	84	Expense		Personal Expenses		
+Employee Benefit, Business		3	Expense	Employee Benefit Programs	Business Expenses	Schedule C:Employee benefit programs T	
+Employee Benefit- Entertainment		1	Expense	Movie Tickets	Personal Expenses		
+Entertainment		307	Expense	Entertainment	Personal Expenses		
+Error Reconciliation		1	Expense		Personal Expenses		
+Finance Charge		6	Income	Finance Charge Income	Personal Income	Schedule C:Other business income T	
+Fines and Tickets		2	Expense		Personal Expenses		
+Furniture		1	Expense		Personal Expenses		
+Gift Received		48	Income	Gift Received	Income		
+Gifts Given		261	Expense	Gift Expenses	Personal Expenses		
+Gr Sales		1	Income	Gross Sales	Income	Schedule C:Gross receipts or sales T	
+Groceries		4261	Expense	Groceries	Personal Expenses		
+Home Equity		2	Income		Personal Income		
+[House]		1	Transfer				
+Household		180	Expense	Household Misc. Exp	Personal Expenses		
+Home Improvement	Household	182	Expense		Personal Expenses		
+Items	Household	601	Expense		Personal Expenses		
+Repairs	Household	109	Expense		Personal Expenses		
+Insurance		263	Expense	Insurance	Personal Expenses		
+Home Owners Insurance	Insurance	1	Expense		Personal Expenses		
+Life Insurance	Insurance	48	Expense		Personal Expenses	Schedule B:Interest income	
+Insurance, Bus		0	Expense	Insurance (not health)	Personal Expenses	Schedule C:Insurance, other than health T	
+Int Paid		0	Expense	Interest Paid	Business Expenses	Schedule C:Interest expense, other T	
+Interest Exp		31	Expense	Interest Expense	Personal Expenses		
+Interest Inc		101	Income	Interest Income	Income	Schedule B:Interest income T	
+Invest Inc		57	Income	Investment Income	Personal Income	 T	
+[Investment at Vanguard Group]		0	Transfer			Out: 1099-R:Total IRA gross distrib. T	
+IRA Contrib		0	Expense	IRA Contribution	Personal Expenses	Form 1040:IRA contribution, self T	
+Late Fees		1	Expense	Late Payment Fees	Business Expenses	Schedule C:Other business expenses T	
+Legal-Prof Fees		1	Expense	Legal & Prof. Fees	Personal Expenses	Schedule C:Legal and professional fees T	
+Licenses and Permits		17	Expense	License and Permits Expense	Personal Expenses	Schedule C:Taxes and licenses T	
+Loan Payment		5	Expense		Personal Expenses		
+Interest	Loan Payment	0	Expense	Loan Interest	Personal Expenses	 T	
+Principal	Loan Payment	0	Expense	Loan Principal	Personal Expenses		
+Meals & Entertn		4	Expense	Meals & Entertainment	Business Expenses	Schedule C:Meals and entertainment T	
+Medical		17	Expense	Medical Expense	Personal Expenses	Schedule A:Medicine and drugs T	
+Doctor	Medical	651	Expense	Doctors, Dentists, & Hospitals	Personal Expenses	Schedule A:Doctors, dentists, hospitals T	
+Equipment	Medical	50	Expense	Medical Equipment	Personal Expenses		
+Insurance	Medical	0	Expense	Medical Insurance	Personal Expenses	Schedule A:Medicine and drugs T	
+Medicine	Medical	430	Expense	Prescriptions	Personal Expenses	Schedule A:Medicine and drugs T	
+Misc		839	Expense	Miscellaneous	Personal Expenses		
+Miscellaneous, Bus		2	Expense	Misc. Business Expense	Income	Schedule C:Other business expenses T	
+Mortgage		296	Expense		Personal Expenses	 T	
+Mortgage Escrow Overpayment		2	Expense		Personal Expenses		
+Office		6	Expense	Office Expenses	Business Expenses	Schedule C:Office expenses T	
+Other Inc		53	Income	Other Income	Income	Form 1040:Other income, misc. T	
+Other Inc, Bus		15	Income	Other Business Income	Income	Schedule C:Other business income T	
+Pension and Profit-Sharing, Business		0	Expense	Pension and Profit-Sharing Plans	Business Expenses	Schedule C:Pension/profit sharing plans T	
+Personal		4	Expense		Personal Expenses		
+Personal Care		1	Expense		Personal Expenses		
+Personal Loan Repayment		2	Expense		Personal Expenses		
+Postage and Delivery		97	Expense	Postage and Delivery Expense	Personal Expenses	Schedule C:Other business expenses T	
+Printing and Reproduction		0	Expense	Printing and Repro. Expense	Income	Schedule C:Other business expenses T	
+Recreation		139	Expense	Recreation Expense	Personal Expenses		
+Reimbursement		278	Income	Reimbursement	Income		
+Rent		16	Income		Personal Income		
+Rent on Equip		3	Expense	Rent-Vehicle,mach,equip	Business Expenses	Schedule C:Rent/lease vehicles, equip. T	
+Rent Paid		10	Expense	Rent Paid	Personal Expenses	Schedule C:Rent/lease other bus. prop. T	
+Repairs		1	Expense	Repairs	Personal Expenses	Schedule C:Repairs and maintenance T	
+Returns		1	Expense	Returns & Allowances	Personal Expenses	Schedule C:Returns and allowances T	
+[Rivera Checking]		17	Transfer				
+Salary		832	Income	Salary Income	Income	W-2:Salary or wages, self T	
+Savings		104	Expense		Personal Expenses		
+[Savings at Regions Bank]		1	Transfer				
+Services		1	Income	Service Income	Business Income	Schedule C:Gross receipts or sales T	
+Subscriptions		40	Expense	Subscriptions	Personal Expenses		
+Supplies, Bus		15	Expense	Supplies	Business Expenses	Schedule C:Supplies (not from COGS) T	
+Swiffer		64	Expense		Personal Expenses		
+Tax		1	Expense	Taxes	Personal Expenses	 T	
+Fed	Tax	5	Expense	Federal Tax	Personal Expenses	W-2:Federal tax withheld, self T	
+Medicare	Tax	0	Expense	Medicare Tax	Personal Expenses	W-2:Medicare tax withheld, self T	
+Other	Tax	0	Expense	Misc. Taxes	Personal Expenses	 T	
+Property	Tax	0	Expense	Property Tax	Personal Expenses	Schedule A:Real estate taxes T	
+Soc Sec	Tax	0	Expense	Soc Sec Tax	Personal Expenses	W-2:Soc. Sec. tax withheld, self T	
+State	Tax	0	Expense	State Tax	Personal Expenses	W-2:State tax withheld, self T	
+Tax Prep		6	Expense		Personal Expenses		
+Tax Refund		16	Income	State/Local Tax Refund	Income	1099-G:State and local tax refunds T	
+Tax, Business		0	Expense	Taxes & Licenses	Business Expenses	Schedule C:Taxes and licenses T	
+Fed	Tax, Business	0	Expense	Federal Tax	Business Expenses	Schedule C:Taxes and licenses T	
+Local	Tax, Business	0	Expense	Local Tax	Business Expenses	Schedule C:Taxes and licenses T	
+Property	Tax, Business	0	Expense	Property Tax	Business Expenses	Schedule C:Taxes and licenses T	
+State	Tax, Business	0	Expense	State Tax	Business Expenses	Schedule C:Taxes and licenses T	
+Tithe		355	Expense	Tithe	Personal Expenses	Schedule A:Cash charity contributions T	
+Transfer		14	Expense		Personal Expenses		
+New Checking	Transfer	0	Expense		Personal Expenses		
+Travel		7	Expense		Personal Expenses		
+Parking	Travel	3	Expense		Personal Expenses		
+Travel, Bus		1	Expense	Business Travel Expense	Personal Expenses	Schedule C:Travel T	
+Unemployment Inc		0	Income	Unemployment Compensation	Personal Income	1099-G:Unemployment compensation T	
+Utilities		108	Expense	Water, Gas, Electric	Personal Expenses		
+Cable TV	Utilities	134	Expense	Cable TV	Personal Expenses		
+Garbage Collection	Utilities	87	Expense		Personal Expenses	1099-G:Unemployment compensation	
+Gas & Electric	Utilities	333	Expense	Gas and Electricity	Personal Expenses		
+Misc. Utlilities	Utilities	0	Expense	Other	Personal Expenses		
+Satelite TV	Utilities	8	Expense		Personal Expenses		
+Telephone	Utilities	416	Expense	Telephone Expense	Personal Expenses		
+Water	Utilities	183	Expense	Water	Personal Expenses		
+Utilities, Bus		0	Expense	Water, Gas, Electric	Business Expenses	Schedule C:Utilities T	
+Telephone, Bus	Utilities, Bus	0	Expense	Telephone Expense	Personal Expenses	Schedule C:Utilities T	
+Vacation		18	Expense	Vacation expenses	Personal Expenses		
+Lodging	Vacation	1	Expense	Motel/Hotel Costs	Personal Expenses		
+Travel	Vacation	33	Expense	Transportation exp	Personal Expenses		
+Void		14	Expense		Personal Expenses		
+Wages		1	Expense	Wages & Job Credits	Income	Schedule C:Wages paid T	
+Wedding Expense		55	Expense		Personal Expenses		
+Work Supplies		5	Expense		Personal Expenses		

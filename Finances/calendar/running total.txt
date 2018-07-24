@@ -1,0 +1,6 @@
+<td class="fc-day-top fc-sat fc-past" data-date="2018-07-07">
+<div class="d-flex flex-row">
+<div class="d-flex mr-auto small font-italic text-secondary">135</div>
+<a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-07-07&quot;,&quot;type&quot;:&quot;day&quot;}">7</a>
+</div>
+</td>

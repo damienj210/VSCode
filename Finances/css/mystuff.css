@@ -1,0 +1,23 @@
+.btn-hidden {
+    visibility: hidden;
+    /* Hide button */
+}
+
+.divbutton:hover .btn-hidden {
+    visibility: visible;
+    /* On :hover of div show button */
+}
+
+
+/* .navbutton {
+    visibility: hidden;
+    Hide button
+} */
+
+
+/* .tableFixHead { overflow-y: auto; height: 145px; } */
+
+
+/* table { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th { background:#fff; } */

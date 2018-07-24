@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Rivera Finances"
+AuthUserFile  /var/www/html/Finances/.htpasswd
+Require valid-user

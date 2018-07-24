@@ -1,0 +1,133 @@
+<?php
+
+include_once "dbconn/variables.php";
+
+//Step1
+ $db = mysqli_connect($server,$user,$pass,$table)
+  or die('Error connecting to MySQL server.');
+
+// Begin Update record 
+if (isset($_POST['update'])) {
+     $Id = $_POST['Id'];
+     //$Account = $_POST['Account'];
+     $TDate = $_POST['TDate'];
+     $PDate = $_POST['PDate'];
+     $CkNo = $_POST['CkNo'];
+     $Description = $_POST['Description'];
+     $Debit = $_POST['Debit'];
+     $Credit = $_POST['Credit'];
+
+     if ($_POST['Credit'] == NULL){
+          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', Description='$Description', Debit='$Debit', Credit=NULL WHERE Id ='$Id'";
+     }
+     if ($_POST['Debit'] == NULL){
+          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', Description='$Description', Debit=NULL, Credit='$Credit' WHERE Id ='$Id'";
+     }//$query = "UPDATE Register SET Account='" . $Account . "', TDate='" . $TDate ."', PDate='" . $PDate . "', CkNo='" . $CkNo . "', Description='" . $Description . "', Debit='" . $Debit . "', Credit='" . $Credit . "' where Id ='" . $Id . "'";
+     if (mysqli_query($db, $query)) {
+         echo "Record updated successfully";
+     } else {
+         echo "Error updating record: " . mysqli_error($db);
+     }
+}
+// End Update record 
+// Begin Add record
+if (isset($_POST['add'])) {
+     //$Id = $_POST['Id'];
+     //$Account = $_POST['Account'];
+     $TDate = $_POST['TDate'];
+     $PDate = $_POST['PDate'];
+     $CkNo = $_POST['CkNo'];
+     $Description = $_POST['Description'];
+     $Debit = $_POST['Debit'];
+     $Credit = $_POST['Credit'];
+
+     if ($_POST['Credit'] == NULL){
+          $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, Description, Debit, Credit)
+VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', '$Debit', NULL)";
+          //$query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', Description='$Description', Debit='$Debit', Credit=NULL where Id ='$Id'";
+     }
+     if ($_POST['Debit'] == NULL){
+          $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, Description, Debit, Credit)
+VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', NULL, '$Credit')";
+          //$query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', Description='$Description', Debit=NULL, Credit='$Credit' where Id ='$Id'";
+     }//$query = "UPDATE Register SET Account='" . $Account . "', TDate='" . $TDate ."', PDate='" . $PDate . "', CkNo='" . $CkNo . "', Description='" . $Description . "', Debit='" . $Debit . "', Credit='" . $Credit . "' where Id ='" . $Id . "'";
+     if (mysqli_query($db, $query)) {
+         echo "Record updated successfully";
+     } else {
+         echo "Error updating record: " . mysqli_error($db);
+     }
+}
+// End Add record
+
+// Begin delete record
+if (isset($_POST['delete'])) {
+     $Id = $_POST['Id'];
+     $query = "DELETE FROM Register WHERE Id ='$Id'";
+//DELETE FROM MyGuests WHERE id=3
+     if (mysqli_query($db, $query)) {
+         echo "Record updated successfully";
+     } else {
+         echo "Error updating record: " . mysqli_error($db);
+     }
+}
+// End delete record
+
+//Begin upload file
+if (isset($_POST['upload'])) {
+$filename = $_POST['filename'];
+//$filename = $_FILES['filename']['tmp_name'];
+//move_uploaded_file($filename, $filename);
+//<<<eof
+//$query ="LOAD DATA INFILE {$filename} INTO TABLE Register 
+         //FIELDS ENCLOSED BY '\"' FIELDS TERMINATED BY ','
+         //LINES TERMINATED BY '\n'
+         //IGNORE 1 LINES";
+         
+$query = <<<eof
+         LOAD DATA INFILE '$filename' INTO TABLE Register 
+         FIELDS ENCLOSED BY '"' FIELDS TERMINATED BY ','
+         LINES TERMINATED BY '\n'
+         IGNORE 1 LINES
+         (Account,TDate,PDate,CkNo,Description,Debit,Credit)
+eof;   
+
+
+
+echo $query . "</br>";
+//echo $filename . "</br>";
+//$db->query($query);
+     if (mysqli_query($db, $query)) {
+         echo "File uploaded successfully";
+     } else {
+         echo "Error uploading file: " . mysqli_error($db);
+     }
+
+}
+
+//End upload file
+
+
+
+//if(isset($_SERVER["HTTP_REFERER"])){
+//     header("Location: {$_SERVER["HTTP_REFERER"]}");
+//}
+?>
+
+<!--<html>
+<body>
+<br>
+Submitted Data:<br>
+
+<?php //echo $_POST['Id']; ?><br>
+<?php //echo $_POST['Account']; ?><br>
+<?php //echo $_POST['TDate']; ?><br>
+<?php //echo $_POST['PDate']; ?><br>
+<?php //echo $_POST['CkNo']; ?><br>
+<?php //echo $_POST['Description']; ?><br>
+<?php //echo $_POST['Debit']; ?><br>
+<?php //echo $_POST['Credit']; ?><br>
+
+</body>
+</html> -->
+
+

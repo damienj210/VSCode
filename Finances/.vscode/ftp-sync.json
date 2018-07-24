@@ -1,0 +1,24 @@
+{
+    "remotePath": "/var/www/html/Finances",
+    "host": "35.184.127.47",
+    "username": "damienj210",
+    "password": "Krsres3&krs",
+    "port": 22,
+    "secure": true,
+    "protocol": "sftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": true,
+    "privateKeyPath": "D:/Users/Damien/Documents/VSCode/damienj210Private.ppk",
+    "passphrase": "Krsres3&krs",
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store"
+    ],
+    "generatedFiles": {
+        "uploadOnSave": true,
+        "extensionsToInclude": [],
+        "path": "D:/Users/Damien/Documents/VSCode/Finances"
+    }
+}

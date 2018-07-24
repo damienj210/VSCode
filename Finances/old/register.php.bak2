@@ -1,0 +1,184 @@
+<?php
+
+include_once "dbconn/variables.php";
+
+//Step1
+ $db = mysqli_connect($server,$user,$pass,$table)
+   or die('Error connecting to MySQL server.');
+?> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Checking Register</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link href='../Calendar/css/fullcalendar.css' rel='stylesheet'/>
+  <link href='../Calendar/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
+  <link href='https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css' rel='stylesheet' />
+  <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />
+  <link type="text/css" rel="stylesheet" href="../Calendar/css/jquery.qtip.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src='../Calendar/js/moment.js'></script>
+  <script src='../Calendar/js/jquery.js'></script>
+  <script src='../Calendar/js/fullcalendar.js'></script>
+  <script src="../Calendar/js/jquery.qtip.js"></script>
+  <script src="../Calendar/js/popover.js"></script>
+  
+  <script>
+
+$(document).ready(function() {
+
+<!-- $(function() { -->
+
+  // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+      themeSystem: 'jquery-ui',
+      //themeSystem: 'bootstrap4',
+      //bootstrapFontAwesome: true,
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,listWeek'
+      },
+      //defaultDate: '2018-03-12',
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+	 
+      //events: 'dbconn/myfeed.php',
+      eventSources: [
+	  {
+		  url: 'dbconn/myfeed.php',
+		  textColor: 'white'
+	  }
+	  ],
+      eventRender: function(event, element) {
+        element.qtip({
+           content: {
+              text: event.test,
+              title: event.title
+          },
+          position: {
+             target: 'mouse', // Track the mouse as the positioning target
+             adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+          },
+          style: {
+          classes: 'qtip-green qtip-shadow'
+          }
+        });
+      }
+});
+});
+
+
+</script>
+<style>
+  #calendar {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+</style>
+  
+</head>
+<body>
+
+<!--<div class="container-fluid">
+  <h3>Rivera Checking</h3>
+</div>-->
+
+<!-- NAV BAR ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark left"><nav class="nav flex-column bg-dark navbar-dark">-->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+  <a class="navbar-brand" href="#">
+  	<img src="../images/Damien.png" alt="Damien" style="width:40px;">
+</a>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <button class="nav-link btn btn-link" data-toggle="collapse" data-target="#register" aria-expanded="true" aria-controls="register">Register</a>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link btn btn-link" data-toggle="collapse" data-target="#calendar" aria-expanded="false" aria-controls="calendar">Calendar</a>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link btn btn-link" data-toggle="collapse" data-target="#reports" aria-expanded="false" aria-controls="reports">Reports</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Accordion Begin   ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div id="accordion">
+
+<!-- Register  ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="collapse" id="register" aria-labelledby="headingOne" data-parent="#accordion">
+
+<?php
+ //Step2
+ $query = "SELECT * FROM Register LIMIT 10 OFFSET 5";
+ mysqli_query($db, $query) or die('Error querying database.');
+ 
+ //Step3
+ $result = mysqli_query($db, $query);
+ $row = mysqli_fetch_array($result);
+ 
+ //Step 4
+ mysqli_close($db);
+?>
+
+<table class="table table-striped table-hover">
+<thead>
+<tr>
+<th>ID#</th>
+<th>Transaction Date</th>
+<th>Posted Date</th>
+<th>Check No</th>
+<th>Description</th>
+<th>Debit</th>
+<th>Deposit</th>
+</tr>
+</thead>
+<tbody>
+<?php
+	 while ($row = mysqli_fetch_array($result)) {
+		//echo '<tr class="clickable-row" data-href="#">';
+		echo '<th scope="row">' . $row["Id"] . '</th>';
+		echo '<td>' . $row["TDate"] . '</td>';
+		echo '<td>' . $row["PDate"] . '</td>';
+		echo '<td>' . $row["CkNo"] . '</td>';
+		echo '<td>' . $row["Description"] . '</td>';
+		echo '<td>' . $row["Debit"] . '</td>';
+		echo '<td>' . $row["Credit"] . '</td>';
+		echo '<td><button type="button" class="btn btn-primary btn-sm" id="btn' . $row["Id"] . '">Small button</button>';
+		echo '</tr>';
+ 	 }
+
+?>
+</tbody></table>
+
+<!-- End Register  ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+<!-- Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="collapse show" id="calendar" aria-labelledby="headingTwo" data-parent="#accordion">
+<a href="https://fullcalendar.io/docs" target="_blank" >documentation</a>
+<!-- End Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+<!-- Reports ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="collapse" id="reports" aria-labelledby="headingThree" data-parent="#accordion">
+Reports will be here
+<!-- End Reports   ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+<!-- End Accordion   ---------------------------------------------------------------------------------------------------------------------------------- -->
+</div>
+</body>
+</html>
