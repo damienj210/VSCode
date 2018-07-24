@@ -44,7 +44,7 @@
       <button class="nav-link btn btn-link" data-toggle="collapse" data-target="#family" aria-expanded="false" aria-controls="family">Family Members</a>
     </li>
     <li class="nav-item">
-    <a href="./Finances/" class="nav-link btn btn-link">Finances</a>
+    <a href="./Finances/" class="nav-link btn btn-link">Rivera Finances</a>
     </li>
   </ul>
 </nav>
