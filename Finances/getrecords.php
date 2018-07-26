@@ -81,3 +81,22 @@ $counts = $a / $r;
    ?>
  
  </tbody></table>
+ <p></p>
+
+ <ul class="pagination pagination-sm">
+<!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+<?php
+$counts = $a / $r;
+  for ($i=0;$i<=$counts;$i++){
+      $current = ($i + 1);
+      if ($current==$q){
+        echo '<li class="page-item active"><button class="page-link" value="'. ($i + 1) .'" onclick="grabValues(this.value)">'. ($i + 1) .'</button></li>';
+    }
+      else {
+        echo '<li class="page-item"><button class="page-link" value="'. ($i + 1) .'" onclick="grabValues(this.value)">'. ($i + 1) .'</button></li>';
+      }
+    
+  };
+?>
+ <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+</ul>
