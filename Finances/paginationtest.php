@@ -59,16 +59,18 @@ $db = mysqli_connect($server,$user,$pass,$table)
  $result = mysqli_query($db, $query) or die('Error querying database.'); */
  
  ?>
-
-<form action=""> 
+<div class="col-sm-4"
+<form action="" class="form-inline">
+  <label for="recsPerPage" class="form-label">Records Per Page:</label>
   <select name="recsPerPage" id="recsPerPage" onchange="grabValues2()" class="form-control">
-  <option value="10">Record Per Page:</option>
+  <!-- <option value="10">Record Per Page:</option> -->
   <option value="10">10</option>
   <option value="25">25</option>
   <option value="50">50</option>
   <option value="100">100</option>
   </select>
 </form>
+</div>
 <p></p>
 <p></p>
 <div id="txtHint">
