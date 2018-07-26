@@ -2,37 +2,39 @@
 include_once "dbconn/variables.php";
 $db = mysqli_connect($server,$user,$pass,$table)
    or die('Error connecting to MySQL server.');
-?>
 
-<?php
-$q = intval($_GET['q']);
+//q is the page number;
+ $q = intval($_GET['q']);
+ //r is the rows per page;
+ $r = intval($_GET['r']);
+ //a is the total records in the database;
+ $a = intval($_GET['a']);
+ //$b = intval($_GET['b']);
 
-$sql="SELECT * FROM Categories WHERE Id = '".$q."'";
-$result = mysqli_query($db,$sql);
-
-echo "<table>
-<tr>
-<th>Category</th>
-<th>Type</th>
-</tr>";
-while($row = mysqli_fetch_array($result)) {
-    echo "<tr>";
-    echo "<td>" . $row['Category'] . "</td>";
-    echo "<td>" . $row['Type'] . "</td>";
-    echo "</tr>";
-}
-echo "</table>";
-mysqli_close($con);
-?>
-
-
-
-<?php
- 
- $query = "SELECT * FROM Register ORDER BY Id ASC";
+ $records = ($q - 1) * $r;
+ $query = "SELECT * FROM Register ORDER BY Id DESC LIMIT ". $records ."," . $r ;
  $result = mysqli_query($db, $query) or die('Error querying database.');
  
  ?>
+
+<ul class="pagination pagination-sm">
+<!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+<?php
+$counts = $a / $r;
+  for ($i=0;$i<=$counts;$i++){
+      $current = ($i + 1);
+      if ($current==$q){
+        echo '<li class="page-item active"><button class="page-link" value="'. ($i + 1) .'" onclick="grabValues(this.value)">'. ($i + 1) .'</button></li>';
+    }
+      else {
+        echo '<li class="page-item"><button class="page-link" value="'. ($i + 1) .'" onclick="grabValues(this.value)">'. ($i + 1) .'</button></li>';
+      }
+    
+  };
+?>
+ <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+</ul>
+
  
  <table class="table table-striped table-hover table-responsive-sm">
  <thead>
@@ -56,7 +58,7 @@ mysqli_close($con);
    echo '<td>' . $row["Id"] . '</td>';
    echo '<td>' . $row["TDate"] . '</td>';
    echo '<td>' . $row["CkNo"] . '</td>';
-   echo '<td>' . $row["Description"] . '</td>';
+   echo '<td>' . $row["tD"] . '</td>';
    echo '<td>' . $row["Category"] . '</td>';
   if ($row["Debit"] == "0.00") {
     echo '<td class="text-danger"></td>';
@@ -75,6 +77,7 @@ mysqli_close($con);
    echo '</tr>';
  
  }
+ mysqli_close($db);
    ?>
  
  </tbody></table>

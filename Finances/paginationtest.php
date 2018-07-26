@@ -47,40 +47,121 @@ $db = mysqli_connect($server,$user,$pass,$table)
 
 <?php
  
-$query = "SELECT * FROM Register ORDER BY Id ASC";
-$result = mysqli_query($db, $query) or die('Error querying database.');
+ $query = "SELECT COUNT(*) AS cntrows FROM Register";
+          $result = mysqli_query($db,$query);
+            $fetchresult = mysqli_fetch_array($result);
+            $allcount = $fetchresult['cntrows'];
 
-?>
+            //echo 'Total Records = ' . $allcount;
+    
 
-<table class="table table-striped table-hover table-responsive-sm">
-<thead>
-<tr>
-<th>ID#</th>
-<th>Transaction Date</th>
-<th>Check No</th>
-<th>Description</th>
-<th>Category</th>
-<th>Debit</th>
-<th>Deposit</th>
-<th>Balance</th>
-</tr>
-</thead>
-<tbody>
+ $query = "SELECT * FROM Register ORDER BY Id DESC LIMIT 0,10";
+ $result = mysqli_query($db, $query) or die('Error querying database.');
+ 
+ ?>
 
 <form action=""> 
-<select name="categories" onchange="showCategories(this.value)">
-<option value="">Select a category:</option>
-</select>
+  <select name="recsPerPage" id="recsPerPage" onchange="grabValues2()" class="form-control">
+  <option value="10">Record Per Page:</option>
+  <option value="10">10</option>
+  <option value="25">25</option>
+  <option value="50">50</option>
+  <option value="100">100</option>
+  </select>
 </form>
+<p></p>
+<p></p>
+<div id="txtHint">
 
-<div id="txtHint">Category info will be listed here...</div>
+<ul class="pagination pagination-sm">
+<!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+<?php
+$counts = $allcount / 10;
+for ($i=0;$i<=$counts;$i++){
+  $current = ($i + 1);
+  if ($current==1){
+    echo '<li class="page-item active"><button class="page-link" value="'. ($i + 1) .'" onclick="grabValues(this.value)">'. ($i + 1) .'</button></li>';
+  }
+  else {
+    echo '<li class="page-item"><button class="page-link" value="'. ($i + 1) .'" onclick="grabValues(this.value)">'. ($i + 1) .'</button></li>';
+  }
+
+};
+?>
+ <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
+</ul>
+
+
+
+ <table class="table table-striped table-hover table-responsive-sm">
+ <thead>
+ <tr>
+ <th>ID#</th>
+ <th>Transaction Date</th>
+ <th>Check No</th>
+ <th>Description</th>
+ <th>Category</th>
+ <th>Debit</th>
+ <th>Deposit</th>
+ <th>Balance</th>
+ </tr>
+ </thead>
+ <tbody>
+ <?php
+ 
+ 
+ while ($row = mysqli_fetch_array($result)) {
+   echo '<tr class="divbutton">';
+   echo '<td>' . $row["Id"] . '</td>';
+   echo '<td>' . $row["TDate"] . '</td>';
+   echo '<td>' . $row["CkNo"] . '</td>';
+   echo '<td>' . $row["tD"] . '</td>';
+   echo '<td>' . $row["Category"] . '</td>';
+  if ($row["Debit"] == "0.00") {
+    echo '<td class="text-danger"></td>';
+  }
+  else {
+   echo '<td class="text-danger">' . $row["Debit"] . '</td>';
+  }
+   if ($row["Credit"] == "0.00") {
+   echo '<td></td>';
+  }
+  else {
+   echo '<td>' . $row["Credit"] . '</td>';
+  }
+   echo '<td></td>';
+   echo '<td><button type="button" class="btn btn-primary btn-sm btn-hidden" id="btn' . $row["Id"] . '" data-toggle="modal" data-target="#modalEdit' . $row["Id"] . '">Edit</button>';
+   echo '</tr>';
+ 
+ }
+ mysqli_close($db);
+   ?>
+ 
+ </tbody></table>
+ </div>
+
+
 
 <script>
-function showCategories(str) {
-    $option = str;
-    console.log($option);
+function grabValues(str){
+  $page = str;
+  $count = <?php echo $allcount;?>;
+  $option = document.getElementById("recsPerPage").value;
+  showCategories($option,$page,$count);
+}
+function grabValues2(){
+  $page = "1";
+  $count = <?php echo $allcount;?>;
+  $option = document.getElementById("recsPerPage").value;
+  showCategories($option,$page,$count);
+}
+function showCategories(option,page,count) {
+    $option = option;
+    $page = page;
+    $count = count;
+    console.log($option, $page, $count);
   var xhttp;    
-  if (str == "") {
+  if (option == "") {
     document.getElementById("txtHint").innerHTML = "";
     return;
   }
@@ -90,7 +171,8 @@ function showCategories(str) {
       document.getElementById("txtHint").innerHTML = this.responseText;
     }
   };
-  xhttp.open("GET", "getrecords.php?q="+str, true);
+  xhttp.open("GET", "getrecords.php?q=" + $page + "&r=" + $option + "&a=" + $count, true);
+  console.log("getrecords.php?q=" + $page + "&r=" + $option + "&a=" + $count);
   xhttp.send();
 }
 </script>
