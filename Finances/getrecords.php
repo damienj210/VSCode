@@ -73,7 +73,7 @@ $counts = $a / $r;
    echo '<td>' . $row["Credit"] . '</td>';
   }
    echo '<td></td>';
-   echo '<td><button type="button" class="btn btn-primary btn-sm btn-hidden" id="btn' . $row["Id"] . '" data-toggle="modal" data-target="#modalEdit' . $row["Id"] . '">Edit</button>';
+   echo '<td><button type="button" class="btn btn-primary btn-sm btn-hidden" id="btn' . $row["Id"] . '" data-toggle="modal" data-target="#modalEdit" value="' . $row["Id"] . '" onclick="populateModalEdit(this.value)">Edit</button>';
    echo '</tr>';
  
  }
