@@ -134,6 +134,15 @@
 
       <script>
         $(document).ready(function () {
+          var x = document.cookie; 
+          var xVal = x.split('=');
+          if (xVal[1] == ""){
+            
+          }
+          else {
+            document.getElementById("recsPerPage").value = xVal[1];
+          };
+          
           grabValues2();
             });
 
@@ -148,6 +157,7 @@
           $count = <?php echo $allcount;?>;
           $option = document.getElementById("recsPerPage").value;
           showCategories($option,$page,$count);
+          document.cookie = "recsPerPage=" + $option; 
         }
         function showCategories(option,page,count) {
             $option = option;
