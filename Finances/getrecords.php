@@ -16,6 +16,7 @@ $db = mysqli_connect($server,$user,$pass,$table)
  $result = mysqli_query($db, $query) or die('Error querying database.');
  
  ?>
+  
 
 <ul class="pagination pagination-sm">
 <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
@@ -100,3 +101,5 @@ $counts = $a / $r;
 ?>
  <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
 </ul>
+
+     

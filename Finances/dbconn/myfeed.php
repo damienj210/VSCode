@@ -1,10 +1,8 @@
 <?php
 
-//include_once "variables.php";
-
-//Step1
 function get_data(){
-   $db = mysqli_connect('localhost','root','Bux2pywf1Ltk6S','checking')
+	include_once "variables.php";
+   $db = mysqli_connect($server,$user,$pass,$table)
    or die('Error connecting to MySQL server.');
    $query = "SELECT * FROM Register";
    mysqli_query($db, $query) or die('Error querying database.');

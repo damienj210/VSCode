@@ -15,8 +15,8 @@
     <link href='../Finances/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
     <link href='https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css' rel='stylesheet' />
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />
-    <link type="text/css" rel="stylesheet" href="../Finances/css/jquery.qtip.css" />
+<!--     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />-->
+     <link type="text/css" rel="stylesheet" href="../Finances/css/jquery.qtip.css" />
     <link href='../Finances/css/mystuff.css' rel='stylesheet'/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -31,8 +31,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <!-- SimplePagination Plugin -->
-    <script type="text/javascript" src="./js/simplepagination.js"></script>
-    <link rel="stylesheet" href="./css/simplepagination.css"/>
+<!--     <script type="text/javascript" src="./js/simplepagination.js"></script>
+    <link rel="stylesheet" href="./css/simplepagination.css"/> -->
     
 
     
@@ -114,10 +114,17 @@
               
         
         ?>
-        <div class="col-sm-4"
-          <form action="" class="form-inline">
-            <label for="recsPerPage" class="form-label">Records Per Page:</label>
-            <select name="recsPerPage" id="recsPerPage" onchange="grabValues2()" class="form-control">
+        
+        
+        <p></p>
+        <div id="transRegister">
+        
+          
+        
+        </div>
+        <form action="" class="form-inline">
+            <!-- <label for="recsPerPage" class="form-label">Records Per Page:</label> -->
+            <select name="recsPerPage" id="recsPerPage" onchange="grabValues2()" class="form-control-sm">
             <!-- <option value="10">Record Per Page:</option> -->
             <option value="10">10</option>
             <option value="25">25</option>
@@ -125,11 +132,6 @@
             <option value="100">100</option>
             </select>
           </form>
-        </div>
-        <p></p>
-        <p></p>
-        <div id="transRegister">
-        </div>
 
 
       <script>
@@ -157,7 +159,7 @@
           $count = <?php echo $allcount;?>;
           $option = document.getElementById("recsPerPage").value;
           showCategories($option,$page,$count);
-          document.cookie = "recsPerPage=" + $option; 
+          document.cookie = "recsPerPage=" + $option + ";expires=Wed, 18 Dec 2023 12:00:00 GMT"; 
         }
         function showCategories(option,page,count) {
             $option = option;
@@ -187,33 +189,40 @@
             console.log($id);
           var xhttp;    
           if ($id == "") {
-            //document.getElementById("modalEdit").innerHTML = "";
+              document.getElementById("recordID").value = "";
+              document.getElementById("Account").value = "";
+              document.getElementById("tDate").value = "";
+              document.getElementById("pDate").value = "";
+              document.getElementById("CkNo").value = "";
+              document.getElementById("Desc").value = "";
+              document.getElementById("Debit").value = "";
+              document.getElementById("Credit").value = "";
+              document.getElementById("Category").value = "";
             return;
           }
           xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              //document.getElementById("modalEdit").innerHTML = this.responseText;
+            if (this.readyState == 4 && this.status == 200) {              
+              var jsonResponse = JSON.parse(this.responseText);
+              console.log(jsonResponse);
+              document.getElementById("recordID").value = jsonResponse[0].Id;
+              document.getElementById("Account").value = jsonResponse[0].Account;
+              document.getElementById("tDate").value = jsonResponse[0].TDate;
+              document.getElementById("pDate").value = jsonResponse[0].PDate;
+              document.getElementById("CkNo").value = jsonResponse[0].CkNo;
+              document.getElementById("Desc").value = jsonResponse[0].tD;
+              document.getElementById("Debit").value = jsonResponse[0].Debit;
+              document.getElementById("Credit").value = jsonResponse[0].Credit;
+              document.getElementById("Category").value = jsonResponse[0].Category;
             }
           };
           xhttp.open("GET", "editModal.php?q=" + $id, true);
           console.log("editModal.php?q=" +  $id);
           xhttp.send();
+
           //$(document).scrollTop(0);
         }
-        /* function populateModalEdit(recordID) { 
-          document.getElementById("recordID").value = recordID;
-          document.getElementById("Account").value = recordID;
-          document.getElementById("tDate").value = recordID;
-          document.getElementById("pDate").value = recordID;
-          document.getElementById("CkNo").value = recordID;
-          document.getElementById("Desc").value = recordID;
-          document.getElementById("Debit").value = recordID;
-          document.getElementById("Credit").value = recordID;
-          document.getElementById("Category").value = recordID;
-          //document.getElementById("RecurId").value = calEvent.id;
-          //document.getElementById("btnEdit").click();
-        } */
+
       </script>
       </div>
 
@@ -229,14 +238,9 @@
     
     
     <!-- Modals  ------------------------------------------------------------------ -->
-    <!-- <script>
-      function closeModal(){
-        $('#modalEdit').modal('hide');
-      }
-    </script> -->
+
       <?php
               //<!--modal Edit-->
-                  //event.Id, event.Account, event.TDate, event.PDate, event.CkNo, event.tD, event.Debit, event.Credit, event.Category
                   echo '<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                   echo '<div class="modal-dialog" role="document">';
                     echo '<div class="modal-content">';
@@ -251,42 +255,42 @@
                           echo '<div class="form-group row">';
                           echo '<label for="recordID" class="col-sm-4 col-form-label">RecordID:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID" readonly value="">';
+                          echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID" readonly>';
                             echo '</div>';
                           echo '<label for="Account" class="col-sm-4 col-form-label">Account:</label>';
                             echo '<div class="col-sm-8">';
                           //echo $row["Account"];
-                          echo '<input type="text" class="form-control-plaintext" name="Account" id="Account" readonly value="Account">';
+                          echo '<input type="text" class="form-control-plaintext" name="Account" id="Account" readonly>';
                             echo '</div>';
                           echo '</div>';
                           echo '<div class="form-group row">';
                           echo '<label for="tDate" class="col-sm-4 col-form-label control-label">Transaction Date:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="date" class="form-control" name="TDate" id="tDate" value="TDate">';
+                          echo '<input type="text" class="form-control" name="TDate" id="tDate">';
                             echo '</div>';
                           echo '<label for="pDate" class="col-sm-4 col-form-label control-label">Posted Date:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="date" class="form-control" name="PDate" id="pDate" value="PDate">';
+                          echo '<input type="text" class="form-control" name="PDate" id="pDate">';
                             echo '</div>';
                           echo '<label for="CkNo" class="col-sm-4 col-form-label">Check #:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="CkNo" id="CkNo" value="CkNo">';
+                          echo '<input type="text" class="form-control" name="CkNo" id="CkNo">';
                             echo '</div>';
                           echo '<label for="Desc" class="col-sm-4 col-form-label">Description:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="Description" id="Desc" value="tD">';
+                          echo '<input type="text" class="form-control" name="Description" id="Desc">';
                             echo '</div>';
                           echo '<label for="Debit" class="col-sm-4 col-form-label">Debit:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="text-danger form-control" name="Debit" id="Debit" value="Debit">';
+                          echo '<input type="text" class="text-danger form-control" name="Debit" id="Debit">';
                             echo '</div>';
                           echo '<label for="Credit" class="col-sm-4 col-form-label">Deposit:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="Credit" id="Credit" value="Credit">';
+                          echo '<input type="text" class="form-control" name="Credit" id="Credit">';
                             echo '</div>';
                           echo '<label for="Category" class="col-sm-4 col-form-label">Category:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<select class="form-control" name="Category" id="Category" value="Category>';
+                          echo '<select class="form-control" name="Category" id="Category">';
                           $Catquery = "SELECT * FROM Categories";
                           $CatResult = mysqli_query($db, $Catquery) or die('Error querying database.');
                           while ($CatRow = mysqli_fetch_array($CatResult)) {
@@ -316,7 +320,7 @@
                   echo '</div>';
                   echo '</div>';
                   echo '</div>';
-                  //<!--end modal Edit-->
+                //<!--end modal Edit-->
               //<!--modal Upload-->
                 echo '<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                   echo '<div class="modal-dialog" role="document">';
@@ -486,6 +490,8 @@
 
 
 
+    
+    
     </div>
     </div>
     </div>

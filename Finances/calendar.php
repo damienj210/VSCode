@@ -254,11 +254,11 @@ $(document).ready(function() {
                           echo '<div class="form-group row">';
                           echo '<label for="tDate" class="col-sm-4 col-form-label control-label">Transaction Date:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="date" class="form-control" name="TDate" id="tDate" value="TDate">';
+                          echo '<input type="text" class="form-control" name="TDate" id="tDate" value="TDate">';
                             echo '</div>';
                           echo '<label for="pDate" class="col-sm-4 col-form-label control-label">Posted Date:</label>';
                             echo '<div class="col-sm-8">';
-                          echo '<input type="date" class="form-control" name="PDate" id="pDate" value="PDate">';
+                          echo '<input type="text" class="form-control" name="PDate" id="pDate" value="PDate">';
                             echo '</div>';
                           echo '<label for="CkNo" class="col-sm-4 col-form-label">Check #:</label>';
                             echo '<div class="col-sm-8">';
