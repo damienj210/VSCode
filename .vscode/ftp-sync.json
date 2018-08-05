@@ -9,7 +9,7 @@
     "uploadOnSave": true,
     "passive": false,
     "debug": true,
-    "privateKeyPath": "D:/Users/Damien/Documents/VSCode/damienj210Private.ppk",
+    "privateKeyPath": "/home/damien/VSCode/riveraclan/riveraclan/damienj210Private.ppk",
     "passphrase": "Krsres3&krs",
     "ignore": [
         "\\.vscode",
@@ -22,6 +22,6 @@
     "generatedFiles": {
         "uploadOnSave": true,
         "extensionsToInclude": [],
-        "path": "D:/Users/Damien/Documents/VSCode/"
+        "path": "/home/damien/VSCode/riveraclan/"
     }
 }

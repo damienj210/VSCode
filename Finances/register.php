@@ -90,9 +90,22 @@
                   $fetchresult = mysqli_fetch_array($result);
                   $allcount = $fetchresult['cntrows'];
           ?>
-          <button type="button" class="btn btn-success btn-sm" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button>&nbsp;
+            <div class="dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Actions
+              </button>
+              <!-- <div class="dropdown-menu"> -->
+                <ul class="dropdown-menu"><li>
+                <button type="button" class="btn btn-success btn-sm dropdown-item" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button>
+                <button type="button" class="btn btn-success btn-sm dropdown-item" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button>
+                <button type="button" class="btn btn-success btn-sm dropdown-item" id="btnTrash" data-toggle="modal" data-target="#modalTrash">Trash <span class="badge badge-light"><?php echo $allcount; ?></span></button>
+                  </li><li class="divider"></li><li>
+                <button type="button" class="btn btn-success btn-sm dropdown-item" name="btnRecalc" id="btnRecalc" value="Recalc" onclick="javascript:window.location.href = 'RecalculateBalances.php';">Recalc</button>
+                  </li></ul>
+              <!-- </div> --> 
+          <!-- <button type="button" class="btn btn-success btn-sm" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button>&nbsp;
           <button type="button" class="btn btn-success btn-sm" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button>&nbsp;
-          <button type="button" class="btn btn-success btn-sm" id="btnTrash" data-toggle="modal" data-target="#modalTrash">Trash <span class="badge badge-light"><?php echo $allcount; ?></span></button>
+          <button type="button" class="btn btn-success btn-sm" id="btnTrash" data-toggle="modal" data-target="#modalTrash">Trash <span class="badge badge-light"><?php //echo $allcount; ?></span></button> -->
           
 
         </div>
@@ -114,14 +127,14 @@
               
         
         ?>
-        
+         
         
         <p></p>
         <div id="transRegister">
         
-          
-        
         </div>
+        
+
         <form action="" class="form-inline">
             <!-- <label for="recsPerPage" class="form-label">Records Per Page:</label> -->
             <select name="recsPerPage" id="recsPerPage" onchange="grabValues2()" class="form-control-sm">
@@ -136,17 +149,49 @@
 
       <script>
         $(document).ready(function () {
-          var x = document.cookie; 
+           var x = document.cookie; 
           var xVal = x.split('=');
           if (xVal[1] == ""){
             
           }
           else {
             document.getElementById("recsPerPage").value = xVal[1];
-          };
+          }; 
+         /*  var name = "recsPerPage=";
+          var ca = document.cookie.split(';');
+          for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf("recsPerPage=") == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return ""; */
           
           grabValues2();
             });
+
+        
+        function minmax(value, min, max) 
+          {
+            $value = parseInt(value);
+            $min = parseInt(min);
+            $max = parseInt(max);
+              //if( $value < min || isNaN($value)) {
+              if($value < $min || isNaN(value)) {
+                return $min;
+                }
+              else if ($value > $max) {
+                return $max;
+              }                  
+              else {
+                return $value;
+              };
+              
+          }
+
 
         function grabValues(str){
           $page = str;
@@ -180,7 +225,7 @@
           xhttp.open("GET", "getrecords.php?q=" + $page + "&r=" + $option + "&a=" + $count, true);
           console.log("getrecords.php?q=" + $page + "&r=" + $option + "&a=" + $count);
           xhttp.send();
-          $(document).scrollTop(0);
+          //$(document).scrollTop(0);
         }
 
         function populateModalEdit(recordID) {    
@@ -198,6 +243,7 @@
               document.getElementById("Debit").value = "";
               document.getElementById("Credit").value = "";
               document.getElementById("Category").value = "";
+              document.getElementById("CurBal").value = "";
             return;
           }
           xhttp = new XMLHttpRequest();
@@ -214,6 +260,7 @@
               document.getElementById("Debit").value = jsonResponse[0].Debit;
               document.getElementById("Credit").value = jsonResponse[0].Credit;
               document.getElementById("Category").value = jsonResponse[0].Category;
+              document.getElementById("CurBal").value = jsonResponse[0].Balance;
             }
           };
           xhttp.open("GET", "editModal.php?q=" + $id, true);
@@ -253,11 +300,16 @@
                       echo '<div class="modal-body">';
                           echo '<form action="updatephp.php" method="post">';
                           echo '<div class="form-group row">';
+                          //CurBal
+                          echo '<label for="CurBal" class="col-sm-4 col-form-label">CurBal:</label>';
+                            echo '<div class="col-sm-8">';
+                          echo '<input type="text" class="form-control-plaintext" name="CurBal" id="CurBal">';
+                            echo '</div>';
                           echo '<label for="recordID" class="col-sm-4 col-form-label">RecordID:</label>';
                             echo '<div class="col-sm-8">';
                           echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID" readonly>';
                             echo '</div>';
-                          echo '<label for="Account" class="col-sm-4 col-form-label">Account:</label>';
+                            echo '<label for="Account" class="col-sm-4 col-form-label">Account:</label>';
                             echo '<div class="col-sm-8">';
                           //echo $row["Account"];
                           echo '<input type="text" class="form-control-plaintext" name="Account" id="Account" readonly>';
@@ -359,10 +411,11 @@
                       echo '<div class="modal-body">';
                           echo '<form action="updatephp.php" method="post" >';
                           echo '<div class="form-group row">';
-                          //echo '<label for="recordID" class="col-sm-4 col-form-label">RecordID:</label>';
-                            //echo '<div class="col-sm-8">';
-                          //echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID' . $row["Id"] . '" readonly value="' . $row["Id"] . '">';
-                            //echo '</div>';
+                          //CurBal
+                          echo '<label for="CurBal" class="col-sm-4 col-form-label">CurBal:</label>';
+                            echo '<div class="col-sm-8">';
+                          echo '<input type="text" class="form-control-plaintext" name="CurBal" id="CurBal" readonly value="'.$Balance.'">';
+                            echo '</div>';
                           echo '<label for="Account" class="col-sm-4 col-form-label">Account:</label>';
                             echo '<div class="col-sm-8">';
                           echo 'Damien\'s Checking * 7128';
@@ -495,5 +548,7 @@
     </div>
     </div>
     </div>
+    </br></br>
+
   </body>
 </html>

@@ -22,7 +22,8 @@ $db = mysqli_connect($server,$user,$pass,$table)
     'tD' => $row["tD"],
     'Debit' => $row["Debit"],
     'Credit' => $row["Credit"],
-    'Category' => $row["Category"]
+    'Category' => $row["Category"],
+    'Balance' => $row["Balance"]
     );
   }
  

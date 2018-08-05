@@ -99,7 +99,7 @@ include_once "dbconn/variables.php";
 <div>
 <div class="d-flex ml-auto"><?php include_once "piechartChecking.php";?></div>
 <p></p>
-<div><?php include_once "columnchartChecking1.php";?></div>
+<div><?php include_once "columnchartChecking2.php";?></div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>

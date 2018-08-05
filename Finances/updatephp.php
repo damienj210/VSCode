@@ -18,15 +18,19 @@ if (isset($_POST['update'])) {
      $Credit = $_POST['Credit'];
      $Category = $_POST['Category'];
      $RecurId = $_POST['RecurId'];
-
+     $CurrentBalance = $_POST['CurBal'];
+     
      if ($_POST['Credit'] == NULL){
-          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit=NULL, Category='$Category' WHERE Id ='$Id'";
+        $Bal = $CurrentBalance;
+          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit=NULL, Category='$Category', Balance='$Bal' WHERE Id ='$Id'";
      }
      else if ($_POST['Debit'] == NULL){
-          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit=NULL, Credit='$Credit', Category='$Category' WHERE Id ='$Id'";
+        $Bal = $CurrentBalance;
+          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit=NULL, Credit='$Credit', Category='$Category', Balance='$Bal' WHERE Id ='$Id'";
      }
      else {
-          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit='$Credit', Category='$Category' WHERE Id ='$Id'";
+        $Bal = $CurrentBalance;
+          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit='$Credit', Category='$Category', Balance='$Bal' WHERE Id ='$Id'";
      }
      if (mysqli_query($db, $query)) {
          echo "Record updated successfully";
@@ -110,20 +114,24 @@ if (isset($_POST['add'])) {
      $Debit = $_POST['Debit'];
      $Credit = $_POST['Credit'];
      $Category = $_POST['Category'];
+     $CurrentBalance = $_POST['CurBal'];
 
      if ($_POST['Credit'] == NULL){
-          $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, tD, Debit, Credit, Category)
-VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', '$Debit', NULL, '$Category')";
+         $Bal = $CurrentBalance + $Debit;
+          $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, tD, Debit, Credit, Category, Balance)
+VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', '$Debit', NULL, '$Category', '$Bal')";
           //$query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit=NULL where Id ='$Id'";
      }
      else if ($_POST['Debit'] == NULL){
-          $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, tD, Debit, Credit, Category)
-VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', NULL, '$Credit', '$Category')";
+        $Bal = $CurrentBalance + $Credit;
+          $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, tD, Debit, Credit, Category, Balance)
+VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', NULL, '$Credit', '$Category', '$Bal')";
           //$query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit=NULL, Credit='$Credit' where Id ='$Id'";
      }
      else {
-        $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, tD, Debit, Credit, Category)
-        VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', '$Debit', '$Credit', '$Category')";
+        $Bal = $CurrentBalance + $Credit + $Debit;
+        $query = "INSERT INTO Register (Account, TDate, PDate, CkNo, tD, Debit, Credit, Category, Balance)
+        VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description', '$Debit', '$Credit', '$Category', '$Bal')";
      }
      //$query = "UPDATE Register SET Account='" . $Account . "', TDate='" . $TDate ."', PDate='" . $PDate . "', CkNo='" . $CkNo . "', tD='" . $Description . "', Debit='" . $Debit . "', Credit='" . $Credit . "' where Id ='" . $Id . "'";
      if (mysqli_query($db, $query)) {
