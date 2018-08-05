@@ -11,7 +11,7 @@ $end = $_POST['end']; */
  $bdd = new PDO('mysql:host=localhost;dbname=fullcalendar', 'root', 'root');
  } catch(Exception $e) {
 exit('Unable to connect to database.'); */
-}
+//}
  // update the records
 /* $sql = "UPDATE evenement SET title=?, start=?, end=? WHERE id=?";
 $q = $bdd->prepare($sql);

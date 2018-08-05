@@ -13,7 +13,7 @@ include_once "../Finances/dbconn/variables.php";
      $TDate = $_POST['TDate'];
      $PDate = $_POST['PDate'];
      $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate' WHERE Id ='$Id'";
-     }
+     
      if (mysqli_query($db, $query)) {
          echo "Record updated successfully";
      } else {
