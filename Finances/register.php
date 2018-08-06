@@ -365,6 +365,7 @@
                         echo '<button type="submit" class="float-left btn btn-primary" name="update" id="btnupdate" value="update">Save changes</button>';
                         echo '<button type="button" class="float-left btn btn-secondary" data-dismiss="modal">Cancel</button>';
                         echo '<button type="submit" class="float-right btn btn-danger" name="delete" value="delete" onclick="form.submit(name=delete)">Delete</button>';
+                        // echo '<button type="submit" class="float-right btn btn-danger" name="delete" id="btndelete" value="delete">Delete</button>';
 
                         echo '</div>';
                           echo '</form>';

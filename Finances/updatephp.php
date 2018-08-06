@@ -49,14 +49,20 @@ if (isset($_POST['delete'])) {
     $DelQuery = "DELETE FROM Register WHERE Id ='$Id'";
     echo $query;
 //DELETE FROM MyGuests WHERE id=3
-    mysqli_query($db, $CopyQuery);
-    mysqli_query($db, $DelQuery);
-    /* if (mysqli_query($db, $CopyQuery)) {
-        echo "Record updated successfully";
+    // mysqli_query($db, $CopyQuery);
+    // mysqli_query($db, $DelQuery);
+    if (mysqli_query($db, $CopyQuery)) {
+        echo 'Record copied successfully';
     } 
     else {
-        echo "Error updating record: " . mysqli_error($db);
-    } */
+        echo 'Error copying record: ' . mysqli_error($db);
+    }
+    if (mysqli_query($db, $DelQuery)) {
+        echo 'Record deleted successfully';
+    } 
+    else {
+        echo 'Error deleting record: ' . mysqli_error($db);
+    }
     //INSERT INTO persons_table select * from customer_table where person_name = 'tom';
     //DELETE FROM customer_table where person_name = 'tom';
 }
