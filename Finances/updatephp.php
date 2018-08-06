@@ -150,20 +150,91 @@ if (isset($_POST['upload'])) {
 $fileName = $_FILES['filename']['tmp_name'];
 //move_uploaded_file($fileName, $fileName);
 //echo $fileName . "</br>";
-$query = <<<eof
- LOAD DATA LOCAL INFILE '$fileName' INTO TABLE Register 
- FIELDS TERMINATED BY ','
- LINES TERMINATED BY '\r\n'
- IGNORE 1 LINES
- (Account,TDate,PDate,CkNo,tD,Debit,Credit)
-eof;
-echo $query . "</br>";
+// $query = <<<eof
+//  LOAD DATA LOCAL INFILE '$fileName' INTO TABLE Register 
+//  FIELDS TERMINATED BY ','
+//  LINES TERMINATED BY '\r\n'
+//  IGNORE 1 LINES
+//  (Account,TDate,PDate,CkNo,tD,Debit,Credit)
+// eof;
+// echo $query . "</br>";
+    echo $fileName . "</br>";
+    if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
+        echo "<h1>" . "File ". $_FILES['filename']['name'] ." uploaded 
+ successfully." . "</h1>";
+        echo "<h2>Displaying contents:</h2>";
+        //readfile($_FILES['filename']['tmp_name']);
+    }
+    $handle = fopen($_FILES['filename']['tmp_name'], "r");
 
-if (mysqli_query($db, $query)) {
-         echo "File uploaded successfully";
-     } else {
-         echo "Error uploading file: " . mysqli_error($db);
-     }
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        // "Account","Transaction Date","Posted Date","No.","Description","Debit","Credit"
+        $id = NULL;
+        // $account = "Damien\'s Checking * 7128";
+        $account = str_replace("'", "\'", $data[0]);
+        
+        $tdate1 = date_create_from_format('m/d/Y',  $data[1]);
+        $tdate = date_format($tdate1, 'Y-m-d');
+
+        //$pdate = $data[2];
+        $pdate1 = date_create_from_format('m/d/Y',  $data[2]);
+        $pdate = date_format($pdate1, 'Y-m-d');
+
+        $chkno = $data[3];
+        $tD = $data[4];
+
+        if ($data[5] == ""){
+            $debit = "0.00";
+        }
+        else {
+            $debit = $data[5];
+        }
+        if ($data[6] == ""){
+            $credit = "0.00";
+        }
+        else {
+            $credit = $data[6];
+        }
+
+        /////////////////////////////////// get previous Balance //////////////////////
+
+        $query = "SELECT `Balance` FROM Register WHERE Id IN (SELECT MAX(Id) from Register)";
+
+        $result = mysqli_query($db, $query) or die('Error querying database.');
+        while ($row = mysqli_fetch_array($result)){
+            $PrevBal = $row['Balance'];
+        };
+
+        /////////////////////////////////// end get prev Balance //////////////////////
+        $Balance = $PrevBal + $debit + $credit;
+        
+        if ($data[0] == "Account"){
+
+        }
+        else {
+        $import="INSERT into Register(Account,TDate,PDate,CkNo,tD,Debit,Credit,Balance)values('$account','$tdate','$pdate','$chkno','$tD','$debit','$credit','$Balance');";
+        echo $import. "</br>";
+            if (mysqli_query($db, $import)) {
+                echo "File uploaded successfully</br>";
+            } else {
+                echo "Error uploading file: " . mysqli_error($db). "</br>";
+            }
+        }
+
+        
+        //mysql_query($db, $import) or die(mysql_error());
+    }
+
+    fclose($handle);
+
+    print "Import done";
+
+
+// if (mysqli_query($db, $query)) {
+//          echo "File uploaded successfully";
+//      } else {
+//          echo "Error uploading file: " . mysqli_error($db);
+//      }
 
 }
 //End upload file
@@ -236,13 +307,13 @@ if (isset($_POST['uploadCat'])) {
 eof;
     echo $query . "</br>";
     
-    if (mysqli_query($db, $query)) {
-             echo "File uploaded successfully";
-         } else {
-             echo "Error uploading file: " . mysqli_error($db);
-         }
+    // if (mysqli_query($db, $query)) {
+    //          echo "File uploaded successfully";
+    //      } else {
+    //          echo "Error uploading file: " . mysqli_error($db);
+    //      }
     
-    }
+     }
 //upload Categories file
 
 
@@ -274,5 +345,3 @@ Submitted Data:<br>
 
 </body>
 </html> -->
-
-
