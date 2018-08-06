@@ -8,7 +8,7 @@ include_once "dbconn/variables.php";
 /////Recalculate Balances //////////////////
 // Begin Update record 
 ?>
- <table>
+ <!-- <table>
  <thead>
  <tr>
  <th>ID#</th>
@@ -22,7 +22,7 @@ include_once "dbconn/variables.php";
  <th>Recalculated Balance</th>
  </tr>
  </thead>
- <tbody>
+ <tbody> -->
 
 <?php
 
@@ -34,39 +34,39 @@ $query = "SELECT * FROM Register";
      $RecalculatedBalance = $PrevBalance + $row["Credit"] + $row["Debit"];
      $PrevBalance = $RecalculatedBalance;
      $Id = $row["Id"];
-    echo '<tr>';
-    echo '<td>' . $row["Id"] . '</td>';
-    echo '<td>' . $row["TDate"] . '</td>';
-    echo '<td>' . $row["CkNo"] . '</td>';
-    echo '<td>' . $row["tD"] . '</td>';
-    echo '<td>' . $row["Category"] . '</td>';
-   if ($row["Debit"] == "0.00") {
-     echo '<td class="text-danger"></td>';
-   }
-   else {
-    echo '<td class="text-danger">' . $row["Debit"] . '</td>';
-   }
-    if ($row["Credit"] == "0.00") {
-    echo '<td></td>';
-   }
-   else {
-    echo '<td>' . $row["Credit"] . '</td>';
-   }
-    echo '<td>' . $row["Balance"] . '</td>';
-    echo '<td>' . $RecalculatedBalance . '</td>';
-    echo '<td>';
+//     echo '<tr>';
+//     echo '<td>' . $row["Id"] . '</td>';
+//     echo '<td>' . $row["TDate"] . '</td>';
+//     echo '<td>' . $row["CkNo"] . '</td>';
+//     echo '<td>' . $row["tD"] . '</td>';
+//     echo '<td>' . $row["Category"] . '</td>';
+//    if ($row["Debit"] == "0.00") {
+//      echo '<td class="text-danger"></td>';
+//    }
+//    else {
+//     echo '<td class="text-danger">' . $row["Debit"] . '</td>';
+//    }
+//     if ($row["Credit"] == "0.00") {
+//     echo '<td></td>';
+//    }
+//    else {
+//     echo '<td>' . $row["Credit"] . '</td>';
+//    }
+//     echo '<td>' . $row["Balance"] . '</td>';
+//     echo '<td>' . $RecalculatedBalance . '</td>';
+//     echo '<td>';
     $recalculate_query = "UPDATE Register SET Balance='$RecalculatedBalance' WHERE Id ='$Id'";
     
     if (mysqli_query($db, $recalculate_query)) {
-        echo "Record updated successfully";
+        // echo "Record updated successfully";
     } else {
-        echo "Error updating record: " . mysqli_error($db);
+        // echo "Error updating record: " . mysqli_error($db);
     }
-    echo '</td>';
-    echo '<td>';
-    echo $recalculate_query;
-    echo '</td>';
-    echo '</tr>';
+    // echo '</td>';
+    // echo '<td>';
+    // echo $recalculate_query;
+    // echo '</td>';
+    // echo '</tr>';
  }
 
 
@@ -77,9 +77,12 @@ $query = "SELECT * FROM Register";
 
 //////////RETURN TO REFERRING PAGE////////////////
 
-if(isset($_SERVER["HTTP_REFERER"])){
-   header("Location: {$_SERVER["HTTP_REFERER"]}");
-}
+//header("Location: 'register.php");
+// if(isset($_SERVER["HTTP_REFERER"])){
+//    header("Location: {$_SERVER["HTTP_REFERER"]}");
+// }
 ?>
-</tbody></table>
+
+<!-- </tbody></table> -->
+<script> window.location.assign("register.php")</script>
 
