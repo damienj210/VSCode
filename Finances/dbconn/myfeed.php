@@ -33,7 +33,8 @@ function get_data(){
 	   'Debit' => $row["Debit"],
 	   'Credit' => $row["Credit"],
 	   'Category' => $row["Category"],
-	   'id' => $row["RecurID"]
+	   'id' => $row["RecurID"],
+	   'Balance' => $row["Balance"]
 	   );
    }
    return json_encode($event_data);

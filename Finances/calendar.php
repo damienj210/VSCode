@@ -73,6 +73,7 @@ $(document).ready(function() {
         document.getElementById("Credit").value = event.Credit;
         document.getElementById("Category").value = event.Category;
         document.getElementById("RecurId").value = event.id;
+        // document.getElementById("Balance").value = event.Balance;
         document.getElementById("btnupdate").click();
       },
 	 
@@ -149,6 +150,7 @@ $(document).ready(function() {
       document.getElementById("Credit").value = calEvent.Credit;
       document.getElementById("Category").value = calEvent.Category;
       document.getElementById("RecurId").value = calEvent.id;
+      // document.getElementById("Balance").value = calEvent.Balance;
       document.getElementById("btnEdit").click();
       //calendar.fullCalendar( ‘rerenderEvents’ );
 
@@ -297,7 +299,7 @@ $(document).ready(function() {
                             echo '</div>';
                           echo '</div>';
                       echo '<div class="modal-footer">';
-                        echo '<button type="submit" class="float-left btn btn-primary" name="update" id="btnupdate" value="update">Save changes</button>';
+                        echo '<button type="submit" class="float-left btn btn-primary" name="update" id="btnupdate" value="update" onclick="form.submit(name=update)">Save changes</button>';
                         echo '<button type="button" class="float-left btn btn-secondary" data-dismiss="modal">Cancel</button>';
                         echo '<button type="submit" class="float-right btn btn-danger" name="delete" value="delete" onclick="form.submit(name=delete)">Delete</button>';
 
@@ -390,10 +392,13 @@ $(document).ready(function() {
 
 <!-- Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
 <p>
+
 <div class="container">
+
 
 <div id="calendar">
 <a href="https://fullcalendar.io/docs" target="_blank" >documentation</a>
+
 <!-- End Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
 </div>
 </div>
@@ -403,5 +408,6 @@ $(document).ready(function() {
 <button type="button" class="btn btn-success btn-sm" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button>
 </div>
 <!-- End Buttons -->
+
 </body>
 </html>

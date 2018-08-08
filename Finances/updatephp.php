@@ -48,7 +48,7 @@ if (isset($_POST['delete'])) {
     $CopyQuery = "INSERT INTO Trash select * from Register where Id = '$Id'";
     $DelQuery = "DELETE FROM Register WHERE Id ='$Id'";
     echo $query;
-//DELETE FROM MyGuests WHERE id=3
+    //DELETE FROM MyGuests WHERE id=3
     // mysqli_query($db, $CopyQuery);
     // mysqli_query($db, $DelQuery);
     if (mysqli_query($db, $CopyQuery)) {
@@ -151,23 +151,22 @@ VALUES ('Damien\'s Checking * 7128', '$TDate', '$PDate', '$CkNo', '$Description'
 
 
 //Begin upload file
-if (isset($_POST['upload'])) {
-//$fileName = $_POST['filename'];
-$fileName = $_FILES['filename']['tmp_name'];
-//move_uploaded_file($fileName, $fileName);
-//echo $fileName . "</br>";
-// $query = <<<eof
-//  LOAD DATA LOCAL INFILE '$fileName' INTO TABLE Register 
-//  FIELDS TERMINATED BY ','
-//  LINES TERMINATED BY '\r\n'
-//  IGNORE 1 LINES
-//  (Account,TDate,PDate,CkNo,tD,Debit,Credit)
-// eof;
-// echo $query . "</br>";
+    if (isset($_POST['upload'])) {
+    //$fileName = $_POST['filename'];
+    $fileName = $_FILES['filename']['tmp_name'];
+    //move_uploaded_file($fileName, $fileName);
+    //echo $fileName . "</br>";
+    // $query = <<<eof
+    //  LOAD DATA LOCAL INFILE '$fileName' INTO TABLE Register 
+    //  FIELDS TERMINATED BY ','
+    //  LINES TERMINATED BY '\r\n'
+    //  IGNORE 1 LINES
+    //  (Account,TDate,PDate,CkNo,tD,Debit,Credit)
+    // eof;
+    // echo $query . "</br>";
     echo $fileName . "</br>";
     if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
-        echo "<h1>" . "File ". $_FILES['filename']['name'] ." uploaded 
- successfully." . "</h1>";
+        echo "<h1>" . "File ". $_FILES['filename']['name'] ." uploaded successfully." . "</h1>";
         echo "<h2>Displaying contents:</h2>";
         //readfile($_FILES['filename']['tmp_name']);
     }

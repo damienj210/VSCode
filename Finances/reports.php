@@ -87,8 +87,8 @@ include_once "dbconn/variables.php";
     <div class="d-flex ml-auto">
   <!--<div class="ml-auto navbutton"> -->
     <!-- <button type="button" class="btn btn-success btn-sm" id="btnUploadCat" data-toggle="modal" data-target="#modalUploadCat">UploadCategories</button> -->
-    <button type="button" class="btn btn-success btn-sm" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button>&nbsp;
-    <button type="button" class="btn btn-success btn-sm" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button>
+    <!-- <button type="button" class="btn btn-success btn-sm" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button>&nbsp;
+    <button type="button" class="btn btn-success btn-sm" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button> -->
   </div>
   
 </nav>
@@ -98,15 +98,16 @@ include_once "dbconn/variables.php";
 
 <div>
 <div class="d-flex ml-auto"><?php include_once "piechartChecking.php";?></div>
-<p></p>
-<div><?php include_once "columnchartChecking2.php";?></div>
+<!-- <p></p>
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+<p>&nbsp;</p> -->
 <!-- <div class="d-flex ml-auto"><?php //include_once "piechartChecking.php";?></div> -->
 <!-- End Reports   ---------------------------------------------------------------------------------------------------------------------------------- -->
 </div>
 
 </div>
+<div><?php include_once "columnchartChecking2.php";?></div>
 </body>
 </html>

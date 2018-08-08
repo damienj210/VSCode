@@ -33,6 +33,8 @@
     <!-- SimplePagination Plugin -->
 <!--     <script type="text/javascript" src="./js/simplepagination.js"></script>
     <link rel="stylesheet" href="./css/simplepagination.css"/> -->
+    <!-- JSCookie Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     
 
     
@@ -149,13 +151,14 @@
 
       <script>
         $(document).ready(function () {
-           var x = document.cookie; 
-          var xVal = x.split('=');
-          if (xVal[1] == ""){
-            
+           //var x = document.cookie; 
+           $xVal = Cookies.get('recsPerPage');
+          //var xVal = x.split('=');
+          if ($xVal == ""){
+            document.getElementById("recsPerPage").value = 50;
           }
           else {
-            document.getElementById("recsPerPage").value = xVal[1];
+            document.getElementById("recsPerPage").value = $xVal;
           }; 
          /*  var name = "recsPerPage=";
           var ca = document.cookie.split(';');
@@ -204,7 +207,9 @@
           $count = <?php echo $allcount;?>;
           $option = document.getElementById("recsPerPage").value;
           showCategories($option,$page,$count);
-          document.cookie = "recsPerPage=" + $option + ";expires=Wed, 18 Dec 2023 12:00:00 GMT"; 
+          //document.cookie = "recsPerPage=" + $option + ";expires=Wed, 18 Dec 2023 12:00:00 GMT"; 
+          Cookies.set("recsPerPage", $option, { expires: 365 });
+          //Cookies.set('name', 'value', { expires: 7 });
         }
         function showCategories(option,page,count) {
             $option = option;

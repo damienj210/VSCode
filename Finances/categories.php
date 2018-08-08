@@ -84,10 +84,18 @@ include_once "dbconn/variables.php";
             }
             ?></button></div>
     <div class="d-flex ml-auto">
+      <div class="dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Actions
+              </button>
+              <!-- <div class="dropdown-menu"> -->
+                <ul class="dropdown-menu"><li>
   <!--<div class="ml-auto navbutton"> -->
     <!-- <button type="button" class="btn btn-success btn-sm" id="btnUploadCat" data-toggle="modal" data-target="#modalUploadCat">UploadCategories</button> -->
-    <button type="button" class="btn btn-success btn-sm" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button>&nbsp;
-    <button type="button" class="btn btn-success btn-sm" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button>
+    <button type="button" class="btn btn-success btn-sm dropdown-item" id="btnUpload" data-toggle="modal" data-target="#modalUpload">Upload</button>
+    <button type="button" class="btn btn-success btn-sm dropdown-item" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button>
+    </li></ul>
+    </div>
   </div>
   
 </nav>
