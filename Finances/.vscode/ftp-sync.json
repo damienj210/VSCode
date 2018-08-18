@@ -9,16 +9,18 @@
     "uploadOnSave": true,
     "passive": false,
     "debug": true,
-    "privateKeyPath": "/home/damien/VSCode/riveraclan/riveraclan/damienj210Private.ppk",
+    "privateKeyPath": "C:/Users/damie/Documents/GitHub/riveraclan/damienj210Private.ppk",
     "passphrase": "Krsres3&krs",
     "ignore": [
-        "\\.vscode",
-        "\\.git",
-        "\\.DS_Store"
+        ".vscode",
+        ".git",
+        ".DS_Store",
+        "damienj210Private.ppk",
+        "damienj210Public"
     ],
     "generatedFiles": {
         "uploadOnSave": true,
         "extensionsToInclude": [],
-        "path": "/home/damien/VSCode/riveraclan/riveraclan/Finances"
+        "path": "C:/Users/damie/Documents/GitHub/riveraclan/Finances"
     }
 }

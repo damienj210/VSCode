@@ -16,7 +16,7 @@ function drawBasic() {
         // ['2018-06-05', 465.25],
         // ['2018-06-06', 455.37],
         // ['2018-06-07', 263.90]
-        <?php include_once "test.php";?>
+        <?php include_once "test.php";?> 
         
       ]);
 
