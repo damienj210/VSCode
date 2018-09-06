@@ -46,6 +46,9 @@
     <li class="nav-item">
     <a href="./Finances/" class="nav-link btn btn-link">Rivera Finances</a>
     </li>
+    <li class="nav-item">
+    <a href="./Reading/" class="nav-link btn btn-link">Reformed Reading List</a>
+    </li>
   </ul>
 </nav>
 
