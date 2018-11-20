@@ -153,13 +153,22 @@
         $(document).ready(function () {
            //var x = document.cookie; 
            $xVal = Cookies.get('recsPerPage');
+           
           //var xVal = x.split('=');
           if ($xVal == ""){
-            document.getElementById("recsPerPage").value = 50;
+            document.getElementById("recsPerPage").value = 1;
           }
           else {
             document.getElementById("recsPerPage").value = $xVal;
           }; 
+
+          //$pageVal = Cookies.get('lastPageNum');
+          //if ($pageVal == ""){
+           // document.getElementById("txtTopGoTo").value = 3;
+          //}
+          //else {
+            //document.getElementById("txtTopGoTo").value = $pageVal;
+          //}; 
          /*  var name = "recsPerPage=";
           var ca = document.cookie.split(';');
           for(var i = 0; i < ca.length; i++) {
@@ -204,17 +213,20 @@
         }
         function grabValues2(){
           $page = "1";
+          //$page = Cookies.get('lastPageNum');
           $count = <?php echo $allcount;?>;
           $option = document.getElementById("recsPerPage").value;
           showCategories($option,$page,$count);
           //document.cookie = "recsPerPage=" + $option + ";expires=Wed, 18 Dec 2023 12:00:00 GMT"; 
           Cookies.set("recsPerPage", $option, { expires: 365 });
+          //Cookies.set("lastPageNum", $page, { expires: 365 });
           //Cookies.set('name', 'value', { expires: 7 });
         }
         function showCategories(option,page,count) {
             $option = option;
             $page = page;
             $count = count;
+            //Cookies.set("lastPageNum", $page, { expires: 365 });
             console.log($option, $page, $count);
           var xhttp;    
           if (option == "") {

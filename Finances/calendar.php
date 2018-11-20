@@ -45,7 +45,7 @@ $(document).ready(function() {
 
 
   // page is now ready, initialize the calendar...
-
+ 
     $('#calendar').fullCalendar({
       //themeSystem: 'jquery-ui',
       themeSystem: 'bootstrap4',
@@ -66,7 +66,9 @@ $(document).ready(function() {
         document.getElementById("recordID").value = event.Id;
         document.getElementById("Account").value = event.Account;
         document.getElementById("tDate").value = start;
+        //alert(document.getElementById("tDate").value);
         document.getElementById("pDate").value = start;
+        //alert(document.getElementById("pDate").value);
         document.getElementById("CkNo").value = event.CkNo;
         document.getElementById("Desc").value = event.tD;
         document.getElementById("Debit").value = event.Debit;
@@ -74,6 +76,8 @@ $(document).ready(function() {
         document.getElementById("Category").value = event.Category;
         document.getElementById("RecurId").value = event.id;
         // document.getElementById("Balance").value = event.Balance;
+        //document.getElementById("frmUpdate").submit(name=update);
+        //form.submit(name=update);
         document.getElementById("btnupdate").click();
       },
 	 
@@ -127,11 +131,22 @@ $(document).ready(function() {
       );
       }
       calendar.fullCalendar('unselect'); */
+      var dow = $.fullCalendar.formatDate(start, "dddd");
+      var dowtest = start;
+      //alert('DOW: ' + dow);
       var start = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
       document.getElementById("addtDate").value = start;
       document.getElementById("addpDate").value = start;
       document.getElementById("addCategory").value = "";
+      //document.getElementById("dOw").value = Date.parse(start);
+      document.getElementById("dOw").value = weekAndDay(Date.parse(start));
+      document.getElementById("addRecurrence").checked = false;
+      //$('.collapse').collapse('toggle');
+      //$('.collapse').collapse();
+      //document.getElementById("demo").style.display = "none";
       document.getElementById("btnAdd").click();
+      //console.log(weekAndDay(Date.parse(start)));
+      
       
       },
       
@@ -181,224 +196,90 @@ $(document).ready(function() {
 
 
 <!-- NAV BAR ---------------------------------------------------------------------------------------------------------------------------------- -->
+<?php include_once "navbar.php" ?>
 
-<!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark left"><nav class="nav flex-column bg-dark navbar-dark">-->
+<script type="text/javascript">
+    //changeIntSelect()
+    function weekAndDay(date) {
+    console.log(date);
+    correctedDate=parseInt(date, 10)+ 86400000;
+    console.log(correctedDate);
+    var dayName = moment(correctedDate).format("dddd");
+    var formattedDate = parseInt(moment(correctedDate).format("DD"), 10);
+    var nth = Math.floor(formattedDate / 7)+1;
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top d-flex flex-row" style="margin:0 width:100%">
-<ul class="navbar-nav d-flex mr-auto">
-  <a class="navbar-brand" href="../index.php">
-  	<img src="../images/Damien.png" alt="Damien" style="width:40px;">
-</a>
+    console.log(dayName);
+    console.log(formattedDate);
+            var opt= document.getElementById('intMonthSelect').options[0];
+              opt.value = "";
+              opt.text = "";
+            var opt= document.getElementById('intMonthSelect').options[1];
+              opt.value = "";
+              opt.text = "";
+    return nth + " " + dayName;
+    }
 
-    <li class="nav-item">
-      <a href="register.php" class="nav-link btn btn-link">Register</a>
-      <!--<button class="nav-link btn btn-link" id="registerBtn" data-toggle="collapse" data-target="#register" aria-expanded="true" aria-controls="register">Register</a>-->
-    </li>
-    <li class="nav-item">
-      <a href="categories.php" class="nav-link btn btn-link">Categories</a>
-      <!--<button class="nav-link btn btn-link" id="categoriesBtn" data-toggle="collapse" data-target="#categories" aria-expanded="true" aria-controls="categories">Categories</a>-->
-    </li>
-    <li class="nav-item">
-      <a href="calendar.php" class="nav-link btn btn-link">Calendar</a>
-      <!--<button class="nav-link btn btn-link" id="calendarBtn" data-toggle="collapse" data-target="#calendar" aria-expanded="false" aria-controls="calendar">Calendar</a>-->
-    </li>
-    <li class="nav-item">
-      <a href="reports.php" class="nav-link btn btn-link">Reports</a>
-      <!--<button class="nav-link btn btn-link" id="reportsBtn" data-toggle="collapse" data-target="#reports" aria-expanded="false" aria-controls="reports">Reports</a>-->
-    </li>
-    
-    
-  </ul>
-  <div class="d-flex mr-auto">
-  <button type="button" class="btn btn-success" style="display: block; margin: 0 auto;">
-            <?php
-            $query = "SELECT SUM(Debit) AS debit, SUM(Credit) AS credit FROM Register";
-            //$query = "SELECT SUM(Debit + Credit) FROM Register";
-            //mysqli_query($db, $query) or die('Error querying database.');
-            $result = mysqli_query($db, $query)  or die('Error querying database.');
-            while ($row = mysqli_fetch_array($result)) {
-            $Balance = $row["credit"] + $row["debit"];
-            echo 'Checking Balance: ' . $Balance;
-            }
-            ?></button></div>
-  <div class="d-flex ml-auto"></div>
-    
-  
-</nav>
+    function changeIntSelect($val)
+    {
+        if ($val === "week") {
+            document.getElementById("RecurWeek").style.display = "inline";
+        } else {
+            document.getElementById("RecurWeek").style.display = "none";
+        }
+        if ($val === "month") {
+            document.getElementById("RecurMonth").style.display = "inline";
+            var start = document.getElementById("addtDate").value;
+            var dow = document.getElementById("dOw").value;
+            var res = start.split("-", 3);
+            var res3 = res[2];
+            //document.getElementById("intMonthSelect").value = "Monthly on day " + res3;
+            var opt= document.getElementById('intMonthSelect').options[0];
+              opt.value = "Monthly on day " + res3;
+              opt.text = "Monthly on day " + res3;
+            var opt= document.getElementById('intMonthSelect').options[1];
+              opt.value = "Monthly on the " + res3 + "day";
+              opt.text = "Monthly on the " + dow;
+        } else {
+            document.getElementById("RecurMonth").style.display = "none";
+        }
+    }
+    //changeIntMonthSelect()
+    function changeIntMonthSelect($val)
+    {
+        if ($val === "dayNumber") {
+            //document.getElementById("RecurWeek").style.display = "inline";
+        } else {
+            //document.getElementById("RecurWeek").style.display = "none";
+        }
+        if ($val === "dayName") {
+            //document.getElementById("RecurMonth").style.display = "inline";
+        } else {
+            //document.getElementById("RecurMonth").style.display = "none";
+        }
+    }
 
+
+    function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
 
 <!-- Modals -->
-<?php
-                  //<!--modal Edit-->
-                  //event.Id, event.Account, event.TDate, event.PDate, event.CkNo, event.tD, event.Debit, event.Credit, event.Category
-                  echo '<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-                  echo '<div class="modal-dialog" role="document">';
-                    echo '<div class="modal-content">';
-                      echo '<div class="modal-header">';
-                        echo '<h5 class="modal-title" id="exampleModalLabel">Edit Transaction</h5>';
-                        echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-                          echo '<span aria-hidden="true">&times;</span>';
-                        echo '</button>';
-                      echo '</div>';
-                      echo '<div class="modal-body">';
-                          echo '<form action="updatephp.php" method="post">';
-                          echo '<div class="form-group row">';
-                          echo '<label for="recordID" class="col-sm-4 col-form-label">RecordID:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID" readonly value="">';
-                            echo '</div>';
-                          echo '<label for="Account" class="col-sm-4 col-form-label">Account:</label>';
-                            echo '<div class="col-sm-8">';
-                          //echo $row["Account"];
-                          echo '<input type="text" class="form-control-plaintext" name="Account" id="Account" readonly value="Account">';
-                            echo '</div>';
-                          echo '</div>';
-                          echo '<div class="form-group row">';
-                          echo '<label for="tDate" class="col-sm-4 col-form-label control-label">Transaction Date:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="TDate" id="tDate" value="TDate">';
-                            echo '</div>';
-                          echo '<label for="pDate" class="col-sm-4 col-form-label control-label">Posted Date:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="PDate" id="pDate" value="PDate">';
-                            echo '</div>';
-                          echo '<label for="CkNo" class="col-sm-4 col-form-label">Check #:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="CkNo" id="CkNo" value="CkNo">';
-                            echo '</div>';
-                          echo '<label for="Desc" class="col-sm-4 col-form-label">Description:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="Description" id="Desc" value="tD">';
-                            echo '</div>';
-                          echo '<label for="Debit" class="col-sm-4 col-form-label">Debit:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="text-danger form-control" name="Debit" id="Debit" value="Debit">';
-                            echo '</div>';
-                          echo '<label for="Credit" class="col-sm-4 col-form-label">Deposit:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="Credit" id="Credit" value="Credit">';
-                            echo '</div>';
-                          echo '<label for="Category" class="col-sm-4 col-form-label">Category:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<select class="form-control" name="Category" id="Category" value="Category>';
-                          $Catquery = "SELECT * FROM Categories";
-                          $CatResult = mysqli_query($db, $Catquery) or die('Error querying database.');
-                          while ($CatRow = mysqli_fetch_array($CatResult)) {
-                            if ($CatRow["Category"] == $row["Category"]){
-                              echo '<option value="'. $CatRow["Category"] . '" selected>'. $CatRow["Category"] . '</option>';
-                            }
-                            else {
-                              echo '<option value="'. $CatRow["Category"] . '">'. $CatRow["Category"] . '</option>';
-                            }
-                          }
-                          echo '</select>';
-                          echo '<label for="RecurId" class="col-sm-4 col-form-label">RecurID:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="RecurId" id="RecurId" value="RecurId">';
-                            echo '</div>';
-                            echo '</div>';
-                          echo '</div>';
-                      echo '<div class="modal-footer">';
-                        echo '<button type="submit" class="float-left btn btn-primary" name="update" id="btnupdate" value="update" onclick="form.submit(name=update)">Save changes</button>';
-                        echo '<button type="button" class="float-left btn btn-secondary" data-dismiss="modal">Cancel</button>';
-                        echo '<button type="submit" class="float-right btn btn-danger" name="delete" value="delete" onclick="form.submit(name=delete)">Delete</button>';
-
-                        echo '</div>';
-                          echo '</form>';
-                    echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                  //<!--end modal Edit-->
-
-
-                  //<!--modal Add-->
-                  echo '<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-                  echo '<div class="modal-dialog" role="document">';
-                    echo '<div class="modal-content">';
-                      echo '<div class="modal-header">';
-                        echo '<h5 class="modal-title" id="exampleModalLabel">Add Transaction</h5>';
-                        echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-                          echo '<span aria-hidden="true">&times;</span>';
-                        echo '</button>';
-                      echo '</div>';
-                      echo '<div class="modal-body">';
-                          echo '<form action="updatephp.php" method="post" >';
-                          echo '<div class="form-group row">';
-                          //echo '<label for="recordID" class="col-sm-4 col-form-label">RecordID:</label>';
-                            //echo '<div class="col-sm-8">';
-                          //echo '<input type="text" class="form-control-plaintext" name="Id" id="recordID' . $row["Id"] . '" readonly value="' . $row["Id"] . '">';
-                            //echo '</div>';
-                          echo '<label for="Account" class="col-sm-4 col-form-label">Account:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo 'Damien\'s Checking * 7128';
-                          //echo '<input type="text" class="form-control-plaintext" name="Account" id="Account' . $row["Id"] . '" readonly value="' . $row["Account"] . '">';
-                            echo '</div>';
-                          echo '</div>';
-                          echo '<div class="form-group row">';
-                          echo '<label for="tDate" class="col-sm-4 col-form-label">Transaction Date:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="TDate" id="addtDate" value="">';
-                            echo '</div>';
-                          echo '<label for="pDate" class="col-sm-4 col-form-label">Posted Date:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="PDate" id="addpDate" value="">';
-                            echo '</div>';
-                          echo '<label for="CkNo" class="col-sm-4 col-form-label">Check #:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="CkNo" id="addCkNo" value="">';
-                            echo '</div>';
-                          echo '<label for="Desc" class="col-sm-4 col-form-label">Description:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="Description" id="addDesc" value="">';
-                            echo '</div>';
-                          echo '<label for="Debit" class="col-sm-4 col-form-label">Debit:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="text-danger form-control" name="Debit" id="addDebit" value="">';
-                            echo '</div>';
-                          echo '<label for="Credit" class="col-sm-4 col-form-label">Deposit:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<input type="text" class="form-control" name="Credit" id="addCredit" value="">';
-                            echo '</div>';
-                          echo '<label for="Category" class="col-sm-4 col-form-label">Category:</label>';
-                            echo '<div class="col-sm-8">';
-                          echo '<select class="form-control" name="Category" id="addCategory" value="Category>';
-                          $Catquery = "SELECT * FROM Categories";
-                          $CatResult = mysqli_query($db, $Catquery) or die('Error querying database.');
-                          while ($CatRow = mysqli_fetch_array($CatResult)) {
-                            if ($CatRow["Category"] == $row["Category"]){
-                              echo '<option value="'. $CatRow["Category"] . '" selected>'. $CatRow["Category"] . '</option>';
-                            }
-                            else {
-                              echo '<option value="'. $CatRow["Category"] . '">'. $CatRow["Category"] . '</option>';
-                            }
-                          }
-                          echo '</select>';
-                            echo '</div>';
-                          echo '</div>';
-                      echo '<div class="modal-footer">';
-                        //echo '<button type="submit" class="btn btn-danger mr-auto" name="delete" value="delete">Delete</button>';
-                        echo '<button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancel</button>';
-                        echo '<button type="submit" class="btn btn-primary" name="add" value="add">Add Transaction</button>';
-                      echo '</div>';
-                          echo '</form>';
-                    echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                  //<!--end modal Add-->
-      ?>
+<?php include_once "modalEdit.php"?>
+<?php include_once "modalAdd.php"?>
+     
 <!-- End Modals -->
 
 <!-- Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
 <p>
-
 <div class="container">
-
-
 <div id="calendar">
 <a href="https://fullcalendar.io/docs" target="_blank" >documentation</a>
-
 <!-- End Calendar   ---------------------------------------------------------------------------------------------------------------------------------- -->
 </div>
 </div>

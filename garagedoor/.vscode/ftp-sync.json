@@ -1,5 +1,5 @@
 {
-    "remotePath": "/var/www/html",
+    "remotePath": "/var/www/html/garagedoor/",
     "host": "35.184.127.47",
     "username": "damienj210",
     "password": "Krsres3&krs",
@@ -22,6 +22,6 @@
     "generatedFiles": {
         "uploadOnSave": true,
         "extensionsToInclude": [],
-        "path": "C:/Users/damie/Documents/GitHub/riveraclan"
+        "path": "C:/Users/damie/Documents/GitHub/riveraclan/garagedoor/"
     }
 }

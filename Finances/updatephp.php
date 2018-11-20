@@ -4,21 +4,36 @@ include_once "dbconn/variables.php";
 
  $db = mysqli_connect($server,$user,$pass,$table)
   or die('Error connecting to MySQL server.');
+  //echo $db;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /////REGISTER FUNCTIONS//////////////////
 // Begin Update record 
+//echo json_encode($_POST)."</br>";
 if (isset($_POST['update'])) {
+    //echo "updating record...</br>";
      $Id = $_POST['Id'];
+     //echo $Id."</br>";
      //$Account = $_POST['Account'];
      $TDate = $_POST['TDate'];
+     //echo $TDate."</br>";
      $PDate = $_POST['PDate'];
+     //echo $PDate."</br>";
      $CkNo = $_POST['CkNo'];
+     //echo $CkNo."</br>";
      $Description = $_POST['Description'];
+     //echo $Description."</br>";
      $Debit = $_POST['Debit'];
+     //echo $Debit."</br>";
      $Credit = $_POST['Credit'];
+     //echo $Credit."</br>";
      $Category = $_POST['Category'];
+     //echo $Category."</br>";
      $RecurId = $_POST['RecurId'];
+     //echo $RecurId."</br>";
      $CurrentBalance = $_POST['CurBal'];
+     //echo $CurrentBalance."</br>";
+     //echo $_POST['Referer'];
+     
      
      if ($_POST['Credit'] == NULL){
         $Bal = $CurrentBalance;
@@ -30,14 +45,27 @@ if (isset($_POST['update'])) {
      }
      else {
         $Bal = $CurrentBalance;
-          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit='$Credit', Category='$Category', Balance='$Bal' WHERE Id ='$Id'";
+          //$query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit='$Credit', Category='$Category', Balance='$Bal' WHERE Id ='$Id'";
+          $query = "UPDATE Register SET TDate='$TDate', PDate='$PDate', CkNo='$CkNo', tD='$Description', Debit='$Debit', Credit='$Credit', Category='$Category' WHERE Id ='$Id'";
+
      }
      if (mysqli_query($db, $query)) {
-         echo "Record updated successfully";
+         //echo "Record updated successfully";
+         //echo $TDate . ", " . $PDate;
+         //echo $db;
+         //echo $_SERVER['HTTP_REFERER'];
+         //header("Location: {$_SERVER['HTTP_REFERER']}");
+         //header("Location: calendar.php");
      } else {
          echo "Error updating record: " . mysqli_error($db);
+         echo $TDate . ", " . $PDate;
+         echo $db;
      }
-     echo $query;
+     //echo $query;
+     //echo $db;
+     
+    
+     
      
 }
 // End Update record 
@@ -320,15 +348,19 @@ eof;
     
      }
 //upload Categories file
+?>
 
 
 
-
-//////////RETURN TO REFERRING PAGE////////////////
-
+<!--//////////RETURN TO REFERRING PAGE////////////////-->
+<?php
 if(isset($_SERVER["HTTP_REFERER"])){
-   header("Location: {$_SERVER["HTTP_REFERER"]}");
+   header("Location: {$_SERVER['HTTP_REFERER']}");
 }
+//if(isset($_POST['Referer'])){
+   //header("Location: calendar.php");
+//}
+//header("Location: $_SERVER['HTTP_REFERER']");
 ?>
 
 
@@ -338,7 +370,7 @@ if(isset($_SERVER["HTTP_REFERER"])){
 <body>
 <br>
 Submitted Data:<br>
-
+<?php //echo $_POST['name']; ?><br>
 <?php //echo $_POST['Id']; ?><br>
 <?php //echo $_POST['Account']; ?><br>
 <?php //echo $_POST['TDate']; ?><br>
