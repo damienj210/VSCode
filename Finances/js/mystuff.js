@@ -141,3 +141,141 @@ $(function() {
 
 
 });
+
+$(document).ready(function() {
+
+
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        //themeSystem: 'jquery-ui',
+        themeSystem: 'bootstrap4',
+        //bootstrapFontAwesome: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,listWeek'
+        },
+        //defaultDate: '2018-03-12',
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        eventDrop: function(event, delta) {
+            //alert(event.title + " was dropped on " + event.start.format());
+            //var start = $.fullCalendar.formatDate(event.start, "YYYY-MM-DD");
+            var start = event.start.format();
+            document.getElementById("recordID").value = event.Id;
+            document.getElementById("Account").value = event.Account;
+            document.getElementById("tDate").value = start;
+            //alert(document.getElementById("tDate").value);
+            document.getElementById("pDate").value = start;
+            //alert(document.getElementById("pDate").value);
+            document.getElementById("CkNo").value = event.CkNo;
+            document.getElementById("Desc").value = event.tD;
+            document.getElementById("Debit").value = event.Debit;
+            document.getElementById("Credit").value = event.Credit;
+            document.getElementById("Category").value = event.Category;
+            document.getElementById("RecurId").value = event.id;
+            // document.getElementById("Balance").value = event.Balance;
+            //document.getElementById("frmUpdate").submit(name=update);
+            //form.submit(name=update);
+            document.getElementById("btnupdate").click();
+        },
+
+        //events: 'dbconn/myfeed.php',
+        eventSources: [{
+            url: 'dbconn/myfeed.php',
+            textColor: 'white'
+        }],
+        eventRender: function(event, element) {
+            element.qtip({
+                content: {
+                    text: event.amt,
+                    title: event.title
+
+                },
+                position: {
+                    target: 'mouse', // Track the mouse as the positioning target
+                    adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                },
+                style: {
+                    classes: 'qtip-green qtip-shadow'
+                }
+            });
+        },
+        selectable: true,
+        selectHelper: true,
+        select: function(start, end, allDay) {
+            /* var title = prompt('Event Title:');
+            var url = prompt('Type Event url, if exits:');
+            if (title) {
+            var start = $.fullCalendar.formatDate(start, "yyyy-MM-dd HH:mm:ss");
+            var end = $.fullCalendar.formatDate(end, "yyyy-MM-dd HH:mm:ss");
+            $.ajax({
+            url: 'http://localhost:8888/fullcalendar/add_events.php',
+            data: 'title='+ title+'&start='+ start +'&end='+ end +'&url='+ url ,
+            type: "POST",
+            success: function(json) {
+            alert('Added Successfully');
+            }
+            });
+            calendar.fullCalendar('renderEvent',
+            {
+            title: title,
+            start: start,
+            end: end,
+            allDay: allDay
+            },
+            true // make the event "stick"
+            );
+            }
+            calendar.fullCalendar('unselect'); */
+            var dow = $.fullCalendar.formatDate(start, "dddd");
+            var dowtest = start;
+            //alert('DOW: ' + dow);
+            var start = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
+            document.getElementById("addtDate").value = start;
+            document.getElementById("addpDate").value = start;
+            document.getElementById("addCategory").value = "";
+            //document.getElementById("dOw").value = Date.parse(start);
+            document.getElementById("dOw").value = weekAndDay(Date.parse(start));
+            document.getElementById("addRecurrence").checked = false;
+            //$('.collapse').collapse('toggle');
+            //$('.collapse').collapse();
+            //document.getElementById("demo").style.display = "none";
+            document.getElementById("btnAdd").click();
+            //console.log(weekAndDay(Date.parse(start)));
+
+
+        },
+
+        eventClick: function(calEvent) {
+            //alert('Event: ' + calEvent.title + '\r\nID: ' + calEvent.Id + '\r\nAccount: ' + calEvent.Account + '\r\nTDate: ' + calEvent.TDate + '\r\nPDate: ' + calEvent.PDate + '\r\nCkNo: ' + calEvent.CkNo + '\r\ntD: ' + calEvent.tD + '\r\nDebit: ' + calEvent.Debit + '\r\nCredit: ' + calEvent.Credit + '\r\nCategory: ' + calEvent.Category);
+            //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+            //alert('View: ' + view.name);
+            //document.getElementById("btnEdit").click(calEvent.Id, calEvent.Account, calEvent.TDate, calEvent.PDate, calEvent.CkNo, calEvent.tD, calEvent.Debit, calEvent.Credit, calEvent.Category);
+            document.getElementById("recordID").value = calEvent.Id;
+            document.getElementById("Account").value = calEvent.Account;
+            document.getElementById("tDate").value = calEvent.TDate;
+            document.getElementById("pDate").value = calEvent.PDate;
+            document.getElementById("CkNo").value = calEvent.CkNo;
+            document.getElementById("Desc").value = calEvent.tD;
+            document.getElementById("Debit").value = calEvent.Debit;
+            document.getElementById("Credit").value = calEvent.Credit;
+            document.getElementById("Category").value = calEvent.Category;
+            document.getElementById("RecurId").value = calEvent.id;
+            // document.getElementById("Balance").value = calEvent.Balance;
+            document.getElementById("btnEdit").click();
+            //calendar.fullCalendar( ‘rerenderEvents’ );
+
+            // change the border color just for fun
+            //$(this).css('border-color', 'red');
+
+        },
+        /* eventClick: function(event, element) {
+        event.title = "CLICKED!",
+        $('#calendar').fullCalendar('updateEvent', event)
+        }, */
+    });
+});
