@@ -1,4 +1,4 @@
-<!--modal Add-->
+<!--modal Add--> 
 
                   <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -10,7 +10,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                          <form action="updatephp.php" method="post" >
+                          <form action="updatephp1.php" method="post" >
                           <div class="form-group row">
                          <!-- /*  //<label for="recordID" class="col-sm-4 col-form-label">RecordID:</label>
                             //<div class="col-sm-8">
@@ -65,12 +65,12 @@
                             </div>
                             <!-- //<label for="Recurrence" class="col-sm-4 col-form-label">Recurrence:</label>
                             //<div class="checkbox-inline col-sm-4"> -->
-                          <label class="checkbox-inline col-sm-12"><input type="checkbox" name="Recurrence" id="addRecurrence" value="" data-toggle="collapse" data-target="#demo"> Recurrence</label>
-                          <div id="demo" class="collapse">
+                          <label class="checkbox-inline col-sm-12"><input type="checkbox" name="addRecurrence" id="addRecurrence" value="0"> Recurrence</label>
+                          <div name="demo" id="demo" style="display:none">
                           <div class="form-group row col-sm-12">
                              <label for="interval" class="col-sm-5 col-form-label">Repeat Every:</label>
                              <div class="col-sm-3">
-                             <input type="number" class="form-control name="interval" id="RecInterval" value="1">
+                             <input type="number" class="form-control" name="RecInterval" id="RecInterval" value="1">
                              </div>
                              <div class="col-sm-4">
                              <select class="form-control" name="intSelect" id="intSelect" onChange="changeIntSelect(this.value);">
@@ -85,18 +85,18 @@
                              <label class="col-sm-2"></label>
                              <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekSu" id="RecurWeekSu" value="1"> S</label>
                              <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekMo" id="RecurWeekMo" value="2"> M</label>
-                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekTu" id="RecurWeekTu" value="3"> T</label>
-                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekWe" id="RecurWeekWe" value="4"> W</label>
-                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekTh" id="RecurWeekTh" value="5"> T</label>
-                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekFr" id="RecurWeekFr" value="6"> F</label>
-                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekSa" id="RecurWeekSa" value="7"> S</label>
+                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekTu" id="RecurWeekTu" value="4"> T</label>
+                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekWe" id="RecurWeekWe" value="8"> W</label>
+                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekTh" id="RecurWeekTh" value="16"> T</label>
+                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekFr" id="RecurWeekFr" value="32"> F</label>
+                             <label class="checkbox-inline col-sm-1"><input type="checkbox" name="RecurWeekSa" id="RecurWeekSa" value="64"> S</label>
                              </div>
                              
                              <div id="RecurMonth" style="display:none" class="form-group row col-sm-12">
                                     
                                     <label for="intMonthSelect" class="col-sm-4"></label>
                                     <label class="col-sm-7">
-                                      <select class="form-control" name="intMonthSelect" id="intMonthSelect" onChange="changeIntMonthSelect(this.value);">
+                                      <select class="form-control" name="intMonthSelect" id="intMonthSelect">
                                         <option value="dayNumber" selected>day number</option>
                                         <option value="dayName">day name</option>
                                       </select>
@@ -107,17 +107,17 @@
                              <label class="col-sm-5">Ends:</label></div>
 
                              <div class="form-group row col-sm-12">
-                                   <label class="col-sm-4"><input type="radio" name="optradio" checked onclick="RecurEndDate.disabled = this.checked; RecurOccurences.disabled = this.checked">Never</label>
+                                   <label class="col-sm-4"><input type="radio" name="optradio" value="never" checked onclick="RecurEndDate.disabled = this.checked; RecurOccurences.disabled = this.checked">Never</label>
                                    </div>
                                    <div class="form-group row col-sm-12">
-                                   <label class="col-sm-4"><input type="radio" name="optradio" onclick="RecurEndDate.disabled = false; RecurOccurences.disabled = this.checked">On</label>
+                                   <label class="col-sm-4"><input type="radio" name="optradio" value="on" onclick="RecurEndDate.disabled = false; RecurOccurences.disabled = this.checked">On</label>
                                    <label for="RecurEndDate" class="col-form-label"></label>
                                    <div class="col-sm-8">
                                    <input type="text" class="form-control" name="RecurEndDate" id="RecurEndDate" disabled value="">
                                    </div>
                                   </div>
                                   <div class="form-group row col-sm-12">
-                                   <label  class="col-sm-4"><input type="radio" name="optradio" onclick="RecurEndDate.disabled = this.checked; RecurOccurences.disabled = false">After</label>
+                                   <label  class="col-sm-4"><input type="radio" name="optradio" value="after" onclick="RecurEndDate.disabled = this.checked; RecurOccurences.disabled = false">After</label>
                                    <div class="col-sm-8">
                                    <input type="number" class="form-control" name="RecurOccurences" id="RecurOccurences" disabled value="1">
                                    </div></br></br></br></br></br></br>
@@ -132,7 +132,7 @@
                       <div class="modal-footer">
                        <!--  //<button type="submit" class="btn btn-danger mr-auto" name="delete" value="delete">Delete</button> -->
                         <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" name="add" value="add">Add Transaction</button>
+                        <button type="submit" class="btn btn-primary" name="add_future" value="add_future">Add Transaction</button>
                       </div>
                           </form>
                     </div>

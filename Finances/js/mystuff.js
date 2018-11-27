@@ -1,9 +1,8 @@
 //window.onload=toBottom;
-
 function toBottom() {
-
     window.scrollTo(0, document.body.scrollHeight);
 }
+
 //changeIntSelect()
 function weekAndDay(date) {
     console.log(date);
@@ -24,6 +23,7 @@ function weekAndDay(date) {
     return nth + " " + dayName;
 }
 
+
 function changeIntSelect($val) {
     if ($val === "week") {
         document.getElementById("RecurWeek").style.display = "inline";
@@ -41,12 +41,13 @@ function changeIntSelect($val) {
         opt.value = "Monthly on day " + res3;
         opt.text = "Monthly on day " + res3;
         var opt = document.getElementById('intMonthSelect').options[1];
-        opt.value = "Monthly on the " + res3 + "day";
+        opt.value = "Monthly on the " + dow;
         opt.text = "Monthly on the " + dow;
     } else {
         document.getElementById("RecurMonth").style.display = "none";
     }
 }
+
 //changeIntMonthSelect()
 function changeIntMonthSelect($val) {
     if ($val === "dayNumber") {
@@ -93,60 +94,51 @@ $(function() {
 
     });
 
-    $(document).ready(function() {
-        var date_input1 = $('input[name="TDate"]'); //our date input has the name "date"
-        var date_input2 = $('input[name="PDate"]'); //our date input has the name "date"
-        var date_input3 = $('input[name="RecurEndDate"]'); //our date input has the name "date"
-        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-        $nowDate = new Date();
-        /* if ($('input[name="TDate"]') == "") {
-            alert("date is blank");
-            $nowDate = new Date();
-            $startDate = nowDate.getFullYear() + '-' + (nowDate.getMonth() + 1) + '-' + nowDate.getDate();
-            alert("new start date = " + $startDate);
-        } else if ($('input[name="TDate"]') == null) {
-            alert("date is null");
-            $nowDate = new Date();
-            $startDate = nowDate.getFullYear() + '-' + (nowDate.getMonth() + 1) + '-' + nowDate.getDate();
-            alert("new start date = " + $startDate);
-        } else { */
-        $startDate = $('input[name="TDate"]');
-        /* } */
-        var options = {
-            format: 'yyyy-mm-dd',
-            container: container,
-            todayHighlight: true,
-            autoclose: true,
-            todayBtn: true,
-            clearBtn: true,
-            defaultViewDate: $startDate
-        };
-        var options2 = {
-            format: 'yyyy-mm-dd',
-            container: container,
-            todayHighlight: true,
-            autoclose: true,
-            todayBtn: true,
-            clearBtn: true,
-            defaultViewDate: $startDate
-        };
-        date_input1.datepicker(options);
-        date_input2.datepicker(options);
-        date_input3.datepicker(options2);
-
-
-    })
-
-
-
+    $("#addRecurrence").click(function() {
+        //console.log($("#addRecurrence:checked").val());
+        if (document.getElementById("addRecurrence").value === "0") { //($("#addRecurrence:checked").val()) {
+            document.getElementById("demo").style.display = "inline";
+            document.getElementById("addRecurrence").value = "1";
+            console.log(document.getElementById("addRecurrence").value);
+        } else {
+            document.getElementById("demo").style.display = "none";
+            document.getElementById("addRecurrence").value = "0";
+            console.log(document.getElementById("addRecurrence").value);
+        }
+    });
 
 });
+
 
 $(document).ready(function() {
 
 
+    // datepicker
+    var date_input1 = $('input[name="TDate"]'); //our date input has the name "TDate"
+    var date_input2 = $('input[name="PDate"]'); //our date input has the name "PDate"
+    var date_input3 = $('input[name="RecurEndDate"]'); //our date input has the name "RecurEndDate"
+    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+    $nowDate = new Date();
+    $startDate = $('input[name="TDate"]').value;
 
-    // page is now ready, initialize the calendar...
+    var options = {
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+        todayBtn: true,
+        clearBtn: false,
+        defaultViewDate: $startDate,
+
+    };
+
+    date_input1.datepicker(options);
+    date_input2.datepicker(options);
+    date_input3.datepicker(options);
+
+
+
+    //initialize the calendar...
 
     $('#calendar').fullCalendar({
         //themeSystem: 'jquery-ui',
@@ -176,7 +168,7 @@ $(document).ready(function() {
             document.getElementById("Debit").value = event.Debit;
             document.getElementById("Credit").value = event.Credit;
             document.getElementById("Category").value = event.Category;
-            document.getElementById("RecurId").value = event.id;
+            //document.getElementById("RecurId").value = event.id;
             // document.getElementById("Balance").value = event.Balance;
             //document.getElementById("frmUpdate").submit(name=update);
             //form.submit(name=update);
@@ -185,9 +177,15 @@ $(document).ready(function() {
 
         //events: 'dbconn/myfeed.php',
         eventSources: [{
-            url: 'dbconn/myfeed.php',
-            textColor: 'white'
-        }],
+                url: 'dbconn/myfeed.php',
+                textColor: 'white'
+            },
+            {
+                url: 'dbconn/myfeedFuture.php',
+                textColor: 'yellow',
+                color: 'black'
+            }
+        ],
         eventRender: function(event, element) {
             element.qtip({
                 content: {
@@ -237,6 +235,7 @@ $(document).ready(function() {
             var start = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
             document.getElementById("addtDate").value = start;
             document.getElementById("addpDate").value = start;
+            document.getElementById("RecurEndDate").value = start;
             document.getElementById("addCategory").value = "";
             //document.getElementById("dOw").value = Date.parse(start);
             document.getElementById("dOw").value = weekAndDay(Date.parse(start));
@@ -264,7 +263,7 @@ $(document).ready(function() {
             document.getElementById("Debit").value = calEvent.Debit;
             document.getElementById("Credit").value = calEvent.Credit;
             document.getElementById("Category").value = calEvent.Category;
-            document.getElementById("RecurId").value = calEvent.id;
+            //document.getElementById("RecurId").value = calEvent.id;
             // document.getElementById("Balance").value = calEvent.Balance;
             document.getElementById("btnEdit").click();
             //calendar.fullCalendar( ‘rerenderEvents’ );
@@ -273,9 +272,9 @@ $(document).ready(function() {
             //$(this).css('border-color', 'red');
 
         },
-        /* eventClick: function(event, element) {
-        event.title = "CLICKED!",
-        $('#calendar').fullCalendar('updateEvent', event)
-        }, */
+        eventClick: function(event, element) {
+            //event.title = "CLICKED!",
+            $('#calendar').fullCalendar('updateEvent', event)
+        }
     });
 });
