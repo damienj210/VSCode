@@ -182,8 +182,8 @@ $(document).ready(function() {
             },
             {
                 url: 'dbconn/myfeedFuture.php',
-                textColor: 'yellow',
-                color: 'black'
+                textColor: '#900C3F',
+                //color: '#FFB833'
             }
         ],
         eventRender: function(event, element) {
@@ -272,9 +272,9 @@ $(document).ready(function() {
             //$(this).css('border-color', 'red');
 
         },
-        eventClick: function(event, element) {
-            //event.title = "CLICKED!",
+        /* eventClick: function(event, element) {
+            event.title = "CLICKED!",
             $('#calendar').fullCalendar('updateEvent', event)
-        }
+        } */
     });
 });
