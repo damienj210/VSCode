@@ -9,7 +9,7 @@
     "uploadOnSave": true,
     "passive": false,
     "debug": true,
-    "privateKeyPath": "C:/Users/damie/Documents/GitHub/riveraclan/damienj210Private.ppk",
+    "privateKeyPath": "//RIVERA-NAS1/damien/GitHub/riveraclan/damienj210Private.ppk",
     "passphrase": "Krsres3&krs",
     "ignore": [
         ".vscode",
@@ -21,6 +21,6 @@
     "generatedFiles": {
         "uploadOnSave": true,
         "extensionsToInclude": [],
-        "path": "C:/Users/damie/Documents/GitHub/riveraclan/Finances"
+        "path": "//RIVERA-NAS1/damien/GitHub/riveraclan/Finances"
     }
 }

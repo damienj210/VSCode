@@ -56,12 +56,23 @@
                           $Catquery = "SELECT * FROM Categories";
                           $CatResult = mysqli_query($db, $Catquery) or die('Error querying database.');
                           while ($CatRow = mysqli_fetch_array($CatResult)) {
-                            if ($CatRow["Category"] == $row["Category"]){
-                              echo '<option value="'. $CatRow["Category"] . '" selected>'. $CatRow["Category"] . '</option>';
+                            if ($CatRow["Type"] === "Income"){
+                                if ($CatRow["Category"] == $row["Category"]){
+                                  echo '<option style="color:black" value="'. $CatRow["Category"] . '" selected>'. $CatRow["Category"] . '</option>';
+                                }
+                                else {
+                                  echo '<option style="color:black" value="'. $CatRow["Category"] . '">'. $CatRow["Category"] . '</option>';
+                                }
                             }
                             else {
-                              echo '<option value="'. $CatRow["Category"] . '">'. $CatRow["Category"] . '</option>';
+                                if ($CatRow["Category"] == $row["Category"]){
+                                  echo '<option style="color:red" value="'. $CatRow["Category"] . '" selected>'. $CatRow["Category"] . '</option>';
+                                }
+                                else {
+                                  echo '<option style="color:red" value="'. $CatRow["Category"] . '">'. $CatRow["Category"] . '</option>';
+                                }
                             }
+                            
                           }
                           ?>
                           </select>

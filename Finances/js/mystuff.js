@@ -109,6 +109,9 @@ $(function() {
 
 });
 
+function checkDate(TDate, index, array) {
+    return TDate = "2018-12-03";
+}
 
 $(document).ready(function() {
 
@@ -136,6 +139,21 @@ $(document).ready(function() {
     date_input2.datepicker(options);
     date_input3.datepicker(options);
 
+    $startMonth = "06"; //moment(date).format("MM");
+    $endMonth = "12"; //moment(date).format("MM");
+    $startYear = "2018"; //moment(date).format("YYYY");
+    $endYear = "2020"; //moment(date).format("YYYY");
+    var $query = "test.php?p=" + $startMonth + "&q=" + $endMonth + "&r=" + $startYear + "&s=" + $endYear;
+    //alert($query);
+    var jsonData = $.ajax({
+        url: $query,
+        dataType: "json",
+        async: false
+    }).responseText;
+
+    var parsedJSONData = JSON.parse(jsonData);
+    console.log(parsedJSONData);
+
 
 
     //initialize the calendar...
@@ -143,12 +161,14 @@ $(document).ready(function() {
     $('#calendar').fullCalendar({
         //themeSystem: 'jquery-ui',
         themeSystem: 'bootstrap4',
+        showNonCurrentDates: true,
         //bootstrapFontAwesome: true,
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,listWeek'
         },
+
         //defaultDate: '2018-03-12',
         navLinks: true, // can click day/week names to navigate views
         editable: true,
@@ -186,6 +206,37 @@ $(document).ready(function() {
                 //color: '#FFB833'
             }
         ],
+
+        dayRender: function(date, cell) {
+
+            var cellDate = moment(date).format("YYYY-MM-DD");
+            var dateBalance = "";
+            var dateColor = "";
+            for (var i = 0; i < parsedJSONData.length; i++) {
+                if (parsedJSONData[i].TDate == cellDate) {
+                    //return parsedJSONData[i].Balance;
+                    console.log(parsedJSONData[i].TDate + "," + parsedJSONData[i].Balance + "," + parsedJSONData[i].Color);
+                    dateBalance = parsedJSONData[i].Balance;
+                    dateColor = parsedJSONData[i].Color;
+                    // if (dateBalance < 0) {
+                    //     dateColor = "#ffb3b3";
+                    // }
+                    // if (dateBalance < 200) {
+                    //     dateColor = "#ffd9b3";
+                    // } else {
+                    //     dateColor = "#ccd9ff";
+                    // }
+
+                }
+            };
+            //var cellMonth = "12";
+            // var cellDay = "11";
+            //alert(cellYear + "/" + cellMonth + "/" + cellDay);
+            cell.prepend('<span class="selector" style="color:' + dateColor + '"><i><sup>' + dateBalance + '</sup></i></span>');
+            //#ffff99 yellow, #ffd9b3 orange, #ffb3b3 pink, #ccd9ff, blue
+
+        },
+
         eventRender: function(event, element) {
             element.qtip({
                 content: {

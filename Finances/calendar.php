@@ -81,6 +81,6 @@ include_once "dbconn/variables.php";
 <button type="button" class="btn btn-success btn-sm" id="btnAdd" data-toggle="modal" data-target="#modalAdd">Add</button>
 </div>
 <!-- End Buttons -->
-
+<div id="chart"></div>
 </body>
 </html>

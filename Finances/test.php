@@ -1,14 +1,29 @@
 <?php
-//function get_data(){
+function get_data(){
     include_once "dbconn/variables.php";
     $db = mysqli_connect($server,$user,$pass,$table)
         or die('Error connecting to MySQL server.');
+
+//p is the start date;
+$p = intval($_GET['p']);
+//q is the end date;
+$q = intval($_GET['q']);
+
+//r is the start year;
+$r = intval($_GET['r']);
+//s is the end year;
+$s = intval($_GET['s']);
+
+$beginDate = $r . "-" . $p . "-01";
+$endDate =  $s . "-" . $q . "-31";
+
+
 
   $query = "SELECT `Balance`, `TDate`, `Id`
   FROM Register
   WHERE Id IN (SELECT MAX(Id)
       from 
-          (SELECT * FROM Register WHERE `TDate` BETWEEN '2018-07-01' AND '2018-07-31' ORDER BY `TDate` ) x   
+          (SELECT * FROM Register WHERE `TDate` BETWEEN '" . $beginDate . "' AND '" . $endDate . "' ORDER BY `TDate` ) x 
    
       GROUP BY TDate)";
 
@@ -38,7 +53,13 @@
         else {
             $Color = "#28a745";
         }
-        echo "['" . $TDate . "', " . $Balance . ", '" . $Color . "'],";
+        
+        $resultsArray[] = array(
+            'TDate' => $TDate,
+            'Balance' => $Balance,
+            'Color' => $Color
+        );
+        //echo "['" . $TDate . "', " . $Balance . ", '" . $Color . "'],";
          //echo '[{v: ' . $row["Balance"] . '}, '. $row["TDate"] . '],';
         // echo '{
         //     c: [{ v: ' . $row["Balance"] . ' },
@@ -51,7 +72,9 @@
     //);
     
     };
-    
+    return json_encode($resultsArray);
+};
+print_r(get_data());
     // echo ']);';
     ?>
  
