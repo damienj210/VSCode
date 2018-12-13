@@ -78,7 +78,8 @@
                     //mysqli_query($db, $query) or die('Error querying database.');
                     $result = mysqli_query($db, $query)  or die('Error querying database.');
                     while ($row = mysqli_fetch_array($result)) {
-                    $Balance = $row["credit"] + $row["debit"];
+                    $Balance = round(($row["credit"] + $row["debit"])* 100) / 100;
+                    //Math.round(f * 100) / 100;
                     echo 'Checking Balance: ' . $Balance;
                     }
                     ?>

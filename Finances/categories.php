@@ -79,7 +79,7 @@ include_once "dbconn/variables.php";
             //mysqli_query($db, $query) or die('Error querying database.');
             $result = mysqli_query($db, $query)  or die('Error querying database.');
             while ($row = mysqli_fetch_array($result)) {
-            $Balance = $row["credit"] + $row["debit"];
+              $Balance = round(($row["credit"] + $row["debit"])* 100) / 100;
             echo 'Checking Balance: ' . $Balance;
             }
             ?></button></div>
@@ -126,9 +126,13 @@ include_once "dbconn/variables.php";
 		echo '<tr class="divbutton">';
 		echo '<td>' . $Catrow["Id"] . '</td>';
 		echo '<td>' . $Catrow["ParentCategory"] . '</td>';
-		echo '<td>' . $Catrow["Category"] . '</td>';
-		echo '<td>' . $Catrow["Type"] . '</td>';
-
+    echo '<td>' . $Catrow["Category"] . '</td>';
+    if ($Catrow["Type"] === "Income"){
+		  echo '<td style="color:black">' . $Catrow["Type"] . '</td>';
+    }
+    else {
+      echo '<td style="color:red">' . $Catrow["Type"] . '</td>';
+    }
     echo '<td></td>';
 		echo '<td><button type="button" class="btn btn-primary btn-sm btn-hidden" id="btn' . $Catrow["Id"] . '" data-toggle="modal" data-target="#modalCatEdit' . $Catrow["Id"] . '">Edit</button>';
 		echo '</tr>';
